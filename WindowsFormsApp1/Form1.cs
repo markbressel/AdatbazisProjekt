@@ -36,6 +36,8 @@ namespace WindowsFormsApp1
 
             string connectionString = "User Id=C##Info6;Password=Sapi12345;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=217.73.170.84)(PORT=44678))(CONNECT_DATA=(SID=oRCL)))";
 
+            int r = 0;
+
             using (OracleConnection connection = new OracleConnection(connectionString))
             {
                 try
@@ -54,10 +56,12 @@ namespace WindowsFormsApp1
                                     if (reader["JELSZO"].ToString() == password)
                                     {
                                         MessageBox.Show("Sikeres bejelentkezes");
+                                        r = 1;
                                     }
                                 }
                             }
                             reader.Close();
+                            if(r == 0)MessageBox.Show("Hibas felhasznalonev vagy jelszo");
                         }
                     }
                     
