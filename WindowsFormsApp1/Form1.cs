@@ -29,6 +29,14 @@ namespace WindowsFormsApp1
 
         private void loginButton_Click(object sender, EventArgs e)
         {
+            string username = usernameBox.Text;
+            string password = PasswordBox.Text;
+
+            MessageBox.Show("Username: " + username + "Password: " + password);
+        }
+
+        private void UsernameLabel_Click(object sender, EventArgs e)
+        {
 
         }
     }

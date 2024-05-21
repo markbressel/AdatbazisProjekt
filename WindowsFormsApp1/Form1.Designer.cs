@@ -74,6 +74,7 @@
             this.UsernameLabel.Tag = "";
             this.UsernameLabel.Text = "Username";
             this.UsernameLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.UsernameLabel.Click += new System.EventHandler(this.UsernameLabel_Click);
             // 
             // PasswordLabel
             // 
