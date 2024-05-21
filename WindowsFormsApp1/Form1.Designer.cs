@@ -46,7 +46,6 @@
             this.LoginPanelLabel.Tag = "";
             this.LoginPanelLabel.Text = "Login Panel";
             this.LoginPanelLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.LoginPanelLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // usernameBox
             // 
@@ -74,7 +73,6 @@
             this.UsernameLabel.Tag = "";
             this.UsernameLabel.Text = "Username";
             this.UsernameLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.UsernameLabel.Click += new System.EventHandler(this.UsernameLabel_Click);
             // 
             // PasswordLabel
             // 
@@ -110,7 +108,7 @@
             this.Controls.Add(this.usernameBox);
             this.Controls.Add(this.LoginPanelLabel);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Group West Motors";
             this.ResumeLayout(false);
             this.PerformLayout();
 

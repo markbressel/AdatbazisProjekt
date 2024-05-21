@@ -19,15 +19,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-        }
 
         private void loginButton_Click(object sender, EventArgs e)
         {
@@ -77,11 +68,6 @@ namespace WindowsFormsApp1
                     MessageBox.Show("An error occurred: " + ex.Message);
                 }
             }
-        }
-
-        private void UsernameLabel_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
