@@ -1,0 +1,77 @@
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := Regisztracio('csakolvas_user', 'jelszo1234');
+    DBMS_OUTPUT.PUT_LINE('Az új felhasznalo ID-ja: ' || szam);
+END;
+/
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := elsoID;
+    DBMS_OUTPUT.PUT_LINE('A legkisebb ID: ' || szam);
+END;
+/
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := felhasznaloTorles('csakolvas_user', 'jelszo1234');
+    IF(szam > 0) THEN
+        DBMS_OUTPUT.PUT_LINE('Torolve lett '||szam||' felhasznalo');
+    END IF;
+END;
+/
+SELECT * FROM felhasznalok;
+/
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := felhasznaloTorles('Mathe Vilmos', 'jelszo1234');
+END;
+/
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := EvLekeredezes('Puma');
+    IF( szam != -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az auto evjarata: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := TeljesitmenyLekeredezes('Puma');
+    IF( szam != -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az auto teljesitmenye: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := UzemanyagLekeredezes('Puma');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az auto uzemanyag tipusa: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ArAlkatresz('Olajszuro');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az alkatresz ara: '||szam);
+    END IF;
+END;
+/
+ALTER TABLE alkatreszek
+ADD db INT;
+SELECT * FROM alkatreszek;
+SELECT * FROM autok;
+SELECT * FROM auto_tipus order by 3;
+UPDATE alkatreszek
+SET db = 17
+WHERE alkatresz_id like 10;
+/
+COMMIT;
