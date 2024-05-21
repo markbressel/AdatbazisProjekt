@@ -49,12 +49,18 @@ namespace WindowsFormsApp1
                         {
                             while(reader.Read())
                             {
-                                MessageBox.Show(reader["FELHASZNALONEV"].ToString());
+
+                                if (reader["FELHASZNALONEV"].ToString() == username) {
+                                    if (reader["JELSZO"].ToString() == password)
+                                    {
+                                        MessageBox.Show("Sikeres bejelentkezes");
+                                    }
+                                }
                             }
                             reader.Close();
                         }
                     }
-                    MessageBox.Show("Sikerult");
+                    
                 }
                 catch (Exception ex)
                 {
