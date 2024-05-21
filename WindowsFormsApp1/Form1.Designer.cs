@@ -108,7 +108,7 @@
             this.Controls.Add(this.usernameBox);
             this.Controls.Add(this.LoginPanelLabel);
             this.Name = "Form1";
-            this.Text = "Group West Motors";
+            this.Text = "Ford West Motors";
             this.ResumeLayout(false);
             this.PerformLayout();
 
