@@ -36,8 +36,6 @@ namespace WindowsFormsApp1
 
             string connectionString = "User Id=C##Info6;Password=Sapi12345;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=217.73.170.84)(PORT=44678))(CONNECT_DATA=(SID=oRCL)))";
 
-            int r = 0;
-
             using (OracleConnection connection = new OracleConnection(connectionString))
             {
                 try
@@ -47,24 +45,32 @@ namespace WindowsFormsApp1
                     string query = "SELECT * FROM FELHASZNALOK";
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
-                        using(OracleDataReader reader = command.ExecuteReader())
+                        using (OracleDataReader reader = command.ExecuteReader())
                         {
-                            while(reader.Read())
+                            bool isAuthenticated = false;
+                            while (reader.Read())
                             {
-
-                                if (reader["FELHASZNALONEV"].ToString() == username) {
-                                    if (reader["JELSZO"].ToString() == password)
-                                    {
-                                        MessageBox.Show("Sikeres bejelentkezes");
-                                        r = 1;
-                                    }
+                                if (reader["FELHASZNALONEV"].ToString() == username && reader["JELSZO"].ToString() == password)
+                                {
+                                    isAuthenticated = true;
+                                    break;
                                 }
                             }
                             reader.Close();
-                            if(r == 0)MessageBox.Show("Hibas felhasznalonev vagy jelszo");
+
+                            if (isAuthenticated)
+                            {
+                                MessageBox.Show("Sikeres bejelentkezes");
+                                Form2 mainForm = new Form2();
+                                mainForm.Show();
+                                this.Hide();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Hibas felhasznalonev vagy jelszo");
+                            }
                         }
                     }
-                    
                 }
                 catch (Exception ex)
                 {

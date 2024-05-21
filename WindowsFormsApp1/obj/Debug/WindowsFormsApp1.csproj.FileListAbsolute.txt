@@ -42,3 +42,4 @@ D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\bin\D
 D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.ValueTuple.xml
 D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
+D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form2.resources
