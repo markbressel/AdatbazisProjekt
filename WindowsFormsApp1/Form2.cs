@@ -17,8 +17,8 @@ namespace WindowsFormsApp1
         {
             dataGridView1 = new DataGridView
             {
-                Location = new System.Drawing.Point(30, 100),
-                Size = new System.Drawing.Size(600, 300),
+                Location = new System.Drawing.Point(50, 150),
+                Size = new System.Drawing.Size(500, 200),
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
             this.Controls.Add(dataGridView1);

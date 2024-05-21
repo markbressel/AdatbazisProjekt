@@ -118,7 +118,9 @@
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.selectbutton);
+            this.MaximizeBox = false;
             this.Name = "Form2";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ford West Motors";
             this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);

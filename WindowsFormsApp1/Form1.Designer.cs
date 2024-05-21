@@ -107,7 +107,9 @@
             this.Controls.Add(this.PasswordBox);
             this.Controls.Add(this.usernameBox);
             this.Controls.Add(this.LoginPanelLabel);
+            this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ford West Motors";
             this.ResumeLayout(false);
             this.PerformLayout();
