@@ -48,6 +48,7 @@ namespace WindowsFormsApp1
                                         break;
                                     case 2:
                                         // Csak olvasó user belépés
+                                        MessageBox.Show("Csak olvaso felhasznalo");
                                         mainForm.AdjustForReadOnlyUser();
                                         break;
                                     case 3:
