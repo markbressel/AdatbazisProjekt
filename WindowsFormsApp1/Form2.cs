@@ -16,6 +16,26 @@ namespace WindowsFormsApp1
             InitializeDataGridView();
         }
 
+        public void AdjustForReadOnlyUser()
+        {
+            // Gombok és mezők elrejtése
+            updateButton.Visible = false;
+            deleteButton.Visible = false;
+
+            // Módosítási műveletek tiltása
+            foreach (Control control in this.Controls)
+            {
+                if (control is TextBox)
+                {
+                    ((TextBox)control).ReadOnly = true;
+                }
+                else if (control is Button && control != updateButton)
+                {
+                    control.Enabled = false;
+                }
+            }
+        }
+
         private void InitializeDataGridView()
         {
             dataGridView1 = new DataGridView
@@ -95,17 +115,17 @@ namespace WindowsFormsApp1
                             return;
                         }
                     }
-                    if (selectedValue == "Alkatreszek")
+                    else if (selectedValue == "Alkatreszek")
                     {
                         if (dynamicTextBoxes.Count > 0)
                         {
                             string alkatreszTipus = dynamicTextBoxes[0].Text;
 
-                            // Év lekérdezése
+                            // Ár lekérdezése
                             string query1 = $"SELECT ArAlkatresz('{alkatreszTipus}') FROM DUAL";
                             int ar = ExecuteScalarQuery(query1, connection);
 
-                            // Teljesítmény lekérdezése
+                            // Márka lekérdezése
                             string query2 = $"SELECT MarkaAlkatresz('{alkatreszTipus}') FROM DUAL";
                             string marka = ExecuteScalarQueryString(query2, connection);
 
@@ -134,7 +154,6 @@ namespace WindowsFormsApp1
                             return;
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -206,7 +225,6 @@ namespace WindowsFormsApp1
                 textBox.KeyDown += new KeyEventHandler(OnKeyDownHandler); // Attach the KeyDown event handler
                 this.Controls.Add(textBox);
                 dynamicTextBoxes.Add(textBox);
-
 
                 currentX += textBoxWidth + spacing;
             }

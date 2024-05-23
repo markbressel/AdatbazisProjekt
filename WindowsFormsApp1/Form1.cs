@@ -1,13 +1,6 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -18,7 +11,6 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-
 
         private void loginButton_Click(object sender, EventArgs e)
         {
@@ -33,26 +25,40 @@ namespace WindowsFormsApp1
                 {
                     connection.Open();
 
-                    string query = "SELECT * FROM FELHASZNALOK";
+                    string query = "SELECT FELHASZNALONEV, JELSZO, SZEREP_ID FROM FELHASZNALOK WHERE FELHASZNALONEV = :username AND JELSZO = :password";
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
+                        command.Parameters.Add(new OracleParameter("username", username));
+                        command.Parameters.Add(new OracleParameter("password", password));
+
                         using (OracleDataReader reader = command.ExecuteReader())
                         {
-                            bool isAuthenticated = false;
-                            while (reader.Read())
+                            if (reader.Read())
                             {
-                                if (reader["FELHASZNALONEV"].ToString() == username && reader["JELSZO"].ToString() == password)
-                                {
-                                    isAuthenticated = true;
-                                    break;
-                                }
-                            }
-                            reader.Close();
-
-                            if (isAuthenticated)
-                            {
+                                int szerepId = Convert.ToInt32(reader["SZEREP_ID"]);
                                 MessageBox.Show("Sikeres bejelentkezes");
+
                                 Form2 mainForm = new Form2();
+
+                                switch (szerepId)
+                                {
+                                    case 1:
+                                        // Admin user belépés
+                                        MessageBox.Show("Admin felhasznalo");
+                                        break;
+                                    case 2:
+                                        // Csak olvasó user belépés
+                                        mainForm.AdjustForReadOnlyUser();
+                                        break;
+                                    case 3:
+                                        // Korlátozott user belépés
+                                        //mainForm.AdjustForRestrictedUser(); // Add custom method to adjust for restricted access
+                                        break;
+                                    default:
+                                        MessageBox.Show("Ismeretlen szerep azonosító.");
+                                        return;
+                                }
+
                                 mainForm.Show();
                                 this.Hide();
                             }
