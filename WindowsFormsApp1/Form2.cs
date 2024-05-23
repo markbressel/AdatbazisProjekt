@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
-using Oracle.ManagedDataAccess.Client; // For Oracle database
+using Oracle.ManagedDataAccess.Client;
 
 namespace WindowsFormsApp1
 {
@@ -36,35 +36,6 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            string query = "";
-            switch (selectedValue)
-            {
-                case "Autok":
-                    if (dynamicTextBoxes.Count > 0)
-                    {
-                        string autoTipus = dynamicTextBoxes[0].Text;
-                        query = $"SELECT TeljesitmenyLekeredezes('{autoTipus}') FROM DUAL";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please enter the auto type.");
-                        return;
-                    }
-                    break;
-                case "Alkatreszek":
-                    query = "SELECT * FROM ALKATRESZEK";
-                    break;
-                case "Alkalmazottak":
-                    query = "SELECT * FROM ALKALMAZOTTAK";
-                    break;
-                case "Ugyfelek":
-                    query = "SELECT * FROM UGYFELEK";
-                    break;
-                default:
-                    MessageBox.Show("Invalid selection.");
-                    return;
-            }
-
             string connectionString = "User Id=C##Info6;Password=Sapi12345;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=217.73.170.84)(PORT=44678))(CONNECT_DATA=(SID=oRCL)))";
 
             using (OracleConnection connection = new OracleConnection(connectionString))
@@ -72,15 +43,105 @@ namespace WindowsFormsApp1
                 try
                 {
                     connection.Open();
-                    OracleDataAdapter adapter = new OracleDataAdapter(query, connection);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-                    dataGridView1.DataSource = dataTable;
+
+                    if (selectedValue == "Autok")
+                    {
+                        if (dynamicTextBoxes.Count > 0)
+                        {
+                            string autoTipus = dynamicTextBoxes[0].Text;
+
+                            // Év lekérdezése
+                            string query1 = $"SELECT EvLekeredezes('{autoTipus}') FROM DUAL";
+                            int ev = ExecuteScalarQuery(query1, connection);
+
+                            // Teljesítmény lekérdezése
+                            string query2 = $"SELECT TeljesitmenyLekeredezes('{autoTipus}') FROM DUAL";
+                            int teljesitmeny = ExecuteScalarQuery(query2, connection);
+
+                            // Ár lekérdezése
+                            string query3 = $"SELECT ArLekeredezes('{autoTipus}') FROM DUAL";
+                            int ar = ExecuteScalarQuery(query3, connection);
+
+                            // Üzemanyag lekérdezése
+                            string query4 = $"SELECT UzemanyagLekeredezes('{autoTipus}') FROM DUAL";
+                            string uzemanyag = ExecuteScalarQueryString(query4, connection);
+
+                            if (ev == -1 || teljesitmeny == -1 || ar == -1 || uzemanyag == "-1")
+                            {
+                                MessageBox.Show("No such car type exists.");
+                                return;
+                            }
+
+                            DataTable dataTable = new DataTable();
+                            dataTable.Columns.Add("AutoTipus", typeof(string));
+                            dataTable.Columns.Add("Ev", typeof(int));
+                            dataTable.Columns.Add("Teljesitmeny", typeof(int));
+                            dataTable.Columns.Add("Ar", typeof(int));
+                            dataTable.Columns.Add("Uzemanyag", typeof(string));
+
+                            DataRow row = dataTable.NewRow();
+                            row["AutoTipus"] = autoTipus;
+                            row["Ev"] = ev;
+                            row["Teljesitmeny"] = teljesitmeny;
+                            row["Ar"] = ar;
+                            row["Uzemanyag"] = uzemanyag;
+                            dataTable.Rows.Add(row);
+
+                            dataGridView1.DataSource = dataTable;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter the auto type.");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        string query = "";
+                        switch (selectedValue)
+                        {
+                            case "Alkatreszek":
+                                query = "SELECT * FROM ALKATRESZEK";
+                                break;
+                            case "Alkalmazottak":
+                                query = "SELECT * FROM ALKALMAZOTTAK";
+                                break;
+                            case "Ugyfelek":
+                                query = "SELECT * FROM UGYFELEK";
+                                break;
+                            default:
+                                MessageBox.Show("Invalid selection.");
+                                return;
+                        }
+
+                        OracleDataAdapter adapter = new OracleDataAdapter(query, connection);
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        dataGridView1.DataSource = dataTable;
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("An error occurred: " + ex.Message);
                 }
+            }
+        }
+
+        private int ExecuteScalarQuery(string query, OracleConnection connection)
+        {
+            using (OracleCommand command = new OracleCommand(query, connection))
+            {
+                object result = command.ExecuteScalar();
+                return result != null ? Convert.ToInt32(result) : -1;
+            }
+        }
+
+        private string ExecuteScalarQueryString(string query, OracleConnection connection)
+        {
+            using (OracleCommand command = new OracleCommand(query, connection))
+            {
+                object result = command.ExecuteScalar();
+                return result != null ? result.ToString() : "-1";
             }
         }
 
@@ -143,6 +204,7 @@ namespace WindowsFormsApp1
                     control.Dispose();
                 }
             }
+            dynamicTextBoxes.Clear();
         }
     }
 }

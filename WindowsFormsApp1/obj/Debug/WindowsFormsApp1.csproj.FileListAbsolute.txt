@@ -43,3 +43,38 @@ D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\bin\D
 D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.ValueTuple.xml
 D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
 D:\egyetemhez\Masodikev\adatbazisprojekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form2.resources
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Buffers.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Formats.Asn1.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Memory.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Numerics.Vectors.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Text.Encodings.Web.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Text.Json.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.ValueTuple.dll
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Buffers.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Formats.Asn1.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Memory.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Numerics.Vectors.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Text.Encodings.Web.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Text.Json.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\bin\Debug\System.ValueTuple.xml
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form2.resources
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsF.A1EEDF9B.Up2Date
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+D:\Egyetem\2E.2F\Adatbazis 2\AdatbazisProjekt\AdatbazisProjekt\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
