@@ -70,9 +70,14 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void PasswordBox_TextChanged(object sender, EventArgs e)
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                loginButton_Click(sender, e);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }
