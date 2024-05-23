@@ -1,4 +1,4 @@
---betesz egy alkalmazotat vagy
+	--betesz egy alkalmazotat vagy
 CREATE OR REPLACE FUNCTION Regisztracio(nev felhasznalok.felhasznalonev%TYPE, pss felhasznalok.jelszo%TYPE)
 RETURN NUMBER IS db NUMBER;
     max_id NUMBER;
@@ -122,16 +122,4 @@ BEGIN
         WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
         RECORD_ERROR;
 END ArAlkatresz;
-/
-CREATE OR REPLACE FUNCTION MarkaAlkatresz(tipus auto_tipus.auto_tipus%TYPE)
-RETURN VARCHAR2 IS db VARCHAR2(250);
-BEGIN
-        SELECT alkatresz_marka INTO db FROM Alkatreszek WHERE alkatresz_nev = tipus;
-        RETURN db;
-        EXCEPTION WHEN NO_DATA_FOUND THEN 
-        DBMS_OUTPUT.PUT_LINE('Nincs ilyen auto');
-        RETURN -1;
-        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
-        RECORD_ERROR;
-END MarkaAlkatresz;
 /

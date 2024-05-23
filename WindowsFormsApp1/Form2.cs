@@ -22,18 +22,6 @@ namespace WindowsFormsApp1
             updateButton.Visible = false;
             deleteButton.Visible = false;
 
-            // Módosítási műveletek tiltása
-            foreach (Control control in this.Controls)
-            {
-                if (control is TextBox)
-                {
-                    ((TextBox)control).ReadOnly = true;
-                }
-                else if (control is Button && control != updateButton)
-                {
-                    control.Enabled = false;
-                }
-            }
         }
 
         private void InitializeDataGridView()
