@@ -95,30 +95,46 @@ namespace WindowsFormsApp1
                             return;
                         }
                     }
-                    else
+                    if (selectedValue == "Alkatreszek")
                     {
-                        string query = "";
-                        switch (selectedValue)
+                        if (dynamicTextBoxes.Count > 0)
                         {
-                            case "Alkatreszek":
-                                query = "SELECT * FROM ALKATRESZEK";
-                                break;
-                            case "Alkalmazottak":
-                                query = "SELECT * FROM ALKALMAZOTTAK";
-                                break;
-                            case "Ugyfelek":
-                                query = "SELECT * FROM UGYFELEK";
-                                break;
-                            default:
-                                MessageBox.Show("Invalid selection.");
-                                return;
-                        }
+                            string alkatreszTipus = dynamicTextBoxes[0].Text;
 
-                        OracleDataAdapter adapter = new OracleDataAdapter(query, connection);
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        dataGridView1.DataSource = dataTable;
+                            // Év lekérdezése
+                            string query1 = $"SELECT ArAlkatresz('{alkatreszTipus}') FROM DUAL";
+                            int ar = ExecuteScalarQuery(query1, connection);
+
+                            // Teljesítmény lekérdezése
+                            string query2 = $"SELECT MarkaAlkatresz('{alkatreszTipus}') FROM DUAL";
+                            string marka = ExecuteScalarQueryString(query2, connection);
+
+                            if (ar == -1 || marka == "-1")
+                            {
+                                MessageBox.Show("No such car part type exists.");
+                                return;
+                            }
+
+                            DataTable dataTable = new DataTable();
+                            dataTable.Columns.Add("AlkatreszTipus", typeof(string));
+                            dataTable.Columns.Add("Ar", typeof(int));
+                            dataTable.Columns.Add("Marka", typeof(string));
+
+                            DataRow row = dataTable.NewRow();
+                            row["AlkatreszTipus"] = alkatreszTipus;
+                            row["Ar"] = ar;
+                            row["Marka"] = marka;
+                            dataTable.Rows.Add(row);
+
+                            dataGridView1.DataSource = dataTable;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter the auto part type.");
+                            return;
+                        }
                     }
+
                 }
                 catch (Exception ex)
                 {
