@@ -123,17 +123,15 @@ BEGIN
         RECORD_ERROR;
 END ArAlkatresz;
 /
-CREATE OR REPLACE FUNCTION UzemanyagLekeredezes(tipus auto_tipus.auto_tipus%TYPE)
+CREATE OR REPLACE FUNCTION MarkaAlkatresz(tipus auto_tipus.auto_tipus%TYPE)
 RETURN VARCHAR2 IS db VARCHAR2(250);
-    max_id NUMBER;
 BEGIN
-        SELECT auto_tipus_id INTO max_id FROM auto_tipus WHERE auto_tipus = tipus;
-        SELECT auto_uzemanyag INTO db FROM autok WHERE auto_tipus_id = max_id;
+        SELECT alkatresz_marka INTO db FROM Alkatreszek WHERE alkatresz_nev = tipus;
         RETURN db;
         EXCEPTION WHEN NO_DATA_FOUND THEN 
         DBMS_OUTPUT.PUT_LINE('Nincs ilyen auto');
         RETURN -1;
         WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
         RECORD_ERROR;
-END UzemanyagLekeredezes;
+END MarkaAlkatresz;
 /
