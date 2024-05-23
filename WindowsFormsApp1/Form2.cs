@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Oracle.ManagedDataAccess.Client; // For Oracle database
@@ -7,6 +8,8 @@ namespace WindowsFormsApp1
 {
     public partial class Form2 : Form
     {
+        private List<TextBox> dynamicTextBoxes = new List<TextBox>();
+
         public Form2()
         {
             InitializeComponent();
@@ -37,7 +40,16 @@ namespace WindowsFormsApp1
             switch (selectedValue)
             {
                 case "Autok":
-                    query = "SELECT * FROM AUTOK";
+                    if (dynamicTextBoxes.Count > 0)
+                    {
+                        string autoTipus = dynamicTextBoxes[0].Text;
+                        query = $"SELECT TeljesitmenyLekeredezes('{autoTipus}') FROM DUAL";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please enter the auto type.");
+                        return;
+                    }
                     break;
                 case "Alkatreszek":
                     query = "SELECT * FROM ALKATRESZEK";
@@ -115,6 +127,7 @@ namespace WindowsFormsApp1
                     Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
                 };
                 this.Controls.Add(textBox);
+                dynamicTextBoxes.Add(textBox);
 
                 currentX += textBoxWidth + spacing;
             }
