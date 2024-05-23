@@ -203,10 +203,23 @@ namespace WindowsFormsApp1
                     Location = new System.Drawing.Point(currentX, margin),
                     Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
                 };
+                textBox.KeyDown += new KeyEventHandler(OnKeyDownHandler); // Attach the KeyDown event handler
                 this.Controls.Add(textBox);
                 dynamicTextBoxes.Add(textBox);
 
+
                 currentX += textBoxWidth + spacing;
+            }
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Handle Enter key press
+                selectbutton_Click(sender, e);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 
