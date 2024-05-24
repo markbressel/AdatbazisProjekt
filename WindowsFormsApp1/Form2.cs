@@ -21,7 +21,6 @@ namespace WindowsFormsApp1
             // Gombok és mezők elrejtése
             updateButton.Visible = false;
             deleteButton.Visible = false;
-
         }
 
         private void InitializeDataGridView()
@@ -58,21 +57,17 @@ namespace WindowsFormsApp1
                         {
                             string autoTipus = dynamicTextBoxes[0].Text;
 
-                            // Év lekérdezése
-                            string query1 = $"SELECT EvLekeredezes('{autoTipus}') FROM DUAL";
-                            int ev = ExecuteScalarQuery(query1, connection);
+                            string query1 = "SELECT EvLekeredezes(:autoTipus) FROM DUAL";
+                            int ev = ExecuteScalarQuery(query1, connection, new OracleParameter("autoTipus", autoTipus));
 
-                            // Teljesítmény lekérdezése
-                            string query2 = $"SELECT TeljesitmenyLekeredezes('{autoTipus}') FROM DUAL";
-                            int teljesitmeny = ExecuteScalarQuery(query2, connection);
+                            string query2 = "SELECT TeljesitmenyLekeredezes(:autoTipus) FROM DUAL";
+                            int teljesitmeny = ExecuteScalarQuery(query2, connection, new OracleParameter("autoTipus", autoTipus));
 
-                            // Ár lekérdezése
-                            string query3 = $"SELECT ArLekeredezes('{autoTipus}') FROM DUAL";
-                            int ar = ExecuteScalarQuery(query3, connection);
+                            string query3 = "SELECT ArLekeredezes(:autoTipus) FROM DUAL";
+                            int ar = ExecuteScalarQuery(query3, connection, new OracleParameter("autoTipus", autoTipus));
 
-                            // Üzemanyag lekérdezése
-                            string query4 = $"SELECT UzemanyagLekeredezes('{autoTipus}') FROM DUAL";
-                            string uzemanyag = ExecuteScalarQueryString(query4, connection);
+                            string query4 = "SELECT UzemanyagLekeredezes(:autoTipus) FROM DUAL";
+                            string uzemanyag = ExecuteScalarQueryString(query4, connection, new OracleParameter("autoTipus", autoTipus));
 
                             if (ev == -1 || teljesitmeny == -1 || ar == -1 || uzemanyag == "-1")
                             {
@@ -86,7 +81,6 @@ namespace WindowsFormsApp1
                             dataTable.Columns.Add("Teljesitmeny", typeof(int));
                             dataTable.Columns.Add("Ar", typeof(int));
                             dataTable.Columns.Add("Uzemanyag", typeof(string));
-                            
 
                             DataRow row = dataTable.NewRow();
                             row["AutoTipus"] = autoTipus;
@@ -110,13 +104,11 @@ namespace WindowsFormsApp1
                         {
                             string alkatreszTipus = dynamicTextBoxes[0].Text;
 
-                            // Ár lekérdezése
-                            string query1 = $"SELECT ArAlkatresz('{alkatreszTipus}') FROM DUAL";
-                            int ar = ExecuteScalarQuery(query1, connection);
+                            string query1 = "SELECT ArAlkatresz(:alkatreszTipus) FROM DUAL";
+                            int ar = ExecuteScalarQuery(query1, connection, new OracleParameter("alkatreszTipus", alkatreszTipus));
 
-                            // Márka lekérdezése
-                            string query2 = $"SELECT MarkaAlkatresz('{alkatreszTipus}') FROM DUAL";
-                            string marka = ExecuteScalarQueryString(query2, connection);
+                            string query2 = "SELECT MarkaAlkatresz(:alkatreszTipus) FROM DUAL";
+                            string marka = ExecuteScalarQueryString(query2, connection, new OracleParameter("alkatreszTipus", alkatreszTipus));
 
                             if (ar == -1 || marka == "-1")
                             {
@@ -137,14 +129,21 @@ namespace WindowsFormsApp1
 
                             dataGridView1.DataSource = dataTable;
                         }
-                        else if (selectedValue == "Alkalmazottak")
+                        else
                         {
-                            string keresztnev = dynamicTextBoxes[0].Text;
-                            string vezeteknev = dynamicTextBoxes[1].Text;
+                            MessageBox.Show("Please enter the auto part type.");
+                            return;
+                        }
+                    }
+                    else if (selectedValue == "Alkalmazottak")
+                    {
+                        if (dynamicTextBoxes.Count > 1)
+                        {
+                            string vezeteknev = dynamicTextBoxes[0].Text;
+                            string keresztnev = dynamicTextBoxes[1].Text;
 
-                            // Ár lekérdezése
-                            string query1 = $"SELECT alkalmazottlekerdezes('{vezeteknev}', '{keresztnev}') FROM DUAL";
-                            string alkalmazott = ExecuteScalarQueryString(query1, connection);
+                            string query1 = "SELECT alkalmazottlekerdezes(:vezeteknev, :keresztnev) FROM DUAL";
+                            string alkalmazott = ExecuteScalarQueryString(query1, connection, new OracleParameter("vezeteknev", vezeteknev), new OracleParameter("keresztnev", keresztnev));
 
                             if (alkalmazott == "-1")
                             {
@@ -157,14 +156,13 @@ namespace WindowsFormsApp1
 
                             DataRow row = dataTable.NewRow();
                             row["Alkalmazott"] = alkalmazott;
-                            
                             dataTable.Rows.Add(row);
 
                             dataGridView1.DataSource = dataTable;
                         }
                         else
                         {
-                            MessageBox.Show("Please enter the auto part type.");
+                            MessageBox.Show("Please enter both first and last names.");
                             return;
                         }
                     }
@@ -176,19 +174,29 @@ namespace WindowsFormsApp1
             }
         }
 
-        private int ExecuteScalarQuery(string query, OracleConnection connection)
+        private int ExecuteScalarQuery(string query, OracleConnection connection, params OracleParameter[] parameters)
         {
             using (OracleCommand command = new OracleCommand(query, connection))
             {
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters);
+                }
+
                 object result = command.ExecuteScalar();
                 return result != null ? Convert.ToInt32(result) : -1;
             }
         }
 
-        private string ExecuteScalarQueryString(string query, OracleConnection connection)
+        private string ExecuteScalarQueryString(string query, OracleConnection connection, params OracleParameter[] parameters)
         {
             using (OracleCommand command = new OracleCommand(query, connection))
             {
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters);
+                }
+
                 object result = command.ExecuteScalar();
                 return result != null ? result.ToString() : "-1";
             }
