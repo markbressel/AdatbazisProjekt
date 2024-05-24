@@ -238,20 +238,21 @@ namespace WindowsFormsApp1
             ClearTextBoxes();
 
             string selectedValue = comboBox1.SelectedItem.ToString();
+            int posY = comboBox1.Location.Y;
 
             switch (selectedValue)
             {
-                case "Autok"
-                    AddTextBox(1);
+                case "Autok":
+                    AddTextBox(1, posY);
                     break;
                 case "Alkatreszek":
-                    AddTextBox(1);
+                    AddTextBox(1, posY);
                     break;
                 case "Alkalmazottak":
-                    AddTextBox(2);
+                    AddTextBox(2, posY);
                     break;
                 case "Ugyfelek":
-                    AddTextBox(2);
+                    AddTextBox(2, posY);
                     break;
                 default:
                     break;
@@ -263,29 +264,28 @@ namespace WindowsFormsApp1
             ClearTextBoxes();
 
             string selectedValue = comboBox2.SelectedItem.ToString();
+            int posY = comboBox2.Location.Y;
+
 
             switch (selectedValue)
             {
-                case "Autok":
-                    AddTextBox(1);
+                case "UjRendeles":
+                    AddTextBox(7, posY);
                     break;
-                case "Alkatreszek":
-                    AddTextBox(1);
+                case "UjAlkalmazott":
+                    AddTextBox(5, posY);
                     break;
-                case "Alkalmazottak":
-                    AddTextBox(2);
-                    break;
-                case "Ugyfelek":
-                    AddTextBox(2);
+                case "UjUgyfel":
+                    AddTextBox(7, posY);
                     break;
                 default:
                     break;
             }
         }
 
-        private void AddTextBox(int count)
+        private void AddTextBox(int count, int posY)
         {
-            const int textBoxWidth = 150;
+            const int textBoxWidth = 100;
             const int textBoxHeight = 25;
             const int spacing = 10;
             const int margin = 30;
@@ -299,7 +299,7 @@ namespace WindowsFormsApp1
                 TextBox textBox = new TextBox
                 {
                     Name = "textBox" + (i + 1),
-                    Location = new System.Drawing.Point(currentX, margin),
+                    Location = new System.Drawing.Point(currentX, posY),
                     Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
                 };
                 textBox.KeyDown += new KeyEventHandler(OnKeyDownHandler); // Attach the KeyDown event handler
