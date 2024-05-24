@@ -37,6 +37,8 @@
             this.asdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +54,7 @@
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(31, 89);
+            this.updateButton.Location = new System.Drawing.Point(31, 66);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(75, 23);
             this.updateButton.TabIndex = 1;
@@ -61,7 +63,7 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(31, 147);
+            this.deleteButton.Location = new System.Drawing.Point(31, 97);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(75, 23);
             this.deleteButton.TabIndex = 2;
@@ -109,11 +111,38 @@
             this.comboBox1.TabIndex = 5;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.Items.AddRange(new object[] {
+            "UjRendeles",
+            "UjAlkalmazott",
+            "UjUgyfel"});
+            this.comboBox2.Location = new System.Drawing.Point(112, 66);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 24);
+            this.comboBox2.TabIndex = 6;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.Items.AddRange(new object[] {
+            "RendelesTorles",
+            "AlkalmazottTorles",
+            "UgyfelTorles"});
+            this.comboBox3.Location = new System.Drawing.Point(112, 96);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 24);
+            this.comboBox3.TabIndex = 7;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 553);
+            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.updateButton);
@@ -138,5 +167,7 @@
         private System.Windows.Forms.ToolStripMenuItem asdToolStripMenuItem1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox3;
     }
 }

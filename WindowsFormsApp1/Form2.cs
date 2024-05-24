@@ -241,6 +241,31 @@ namespace WindowsFormsApp1
 
             switch (selectedValue)
             {
+                case "Autok"
+                    AddTextBox(1);
+                    break;
+                case "Alkatreszek":
+                    AddTextBox(1);
+                    break;
+                case "Alkalmazottak":
+                    AddTextBox(2);
+                    break;
+                case "Ugyfelek":
+                    AddTextBox(2);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearTextBoxes();
+
+            string selectedValue = comboBox2.SelectedItem.ToString();
+
+            switch (selectedValue)
+            {
                 case "Autok":
                     AddTextBox(1);
                     break;
@@ -308,5 +333,6 @@ namespace WindowsFormsApp1
             }
             dynamicTextBoxes.Clear();
         }
+
     }
 }
