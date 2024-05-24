@@ -1,0 +1,82 @@
+--vissza adja az auto darabszamat a tipus szerint
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := dbLekeredezes('Puma');
+    IF( szam != -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az auto darabszama: '||szam);
+    END IF;
+END;
+/
+--ez megadja a db szamot az alkatresz neve alapjan
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := DbAlkatresz('Olajszuro');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az alkatresz db-szama: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfeltelo('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel telefonszama: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfelemail('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel emailje: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfelorszag('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel orszaga: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfeltelepules('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel telepulese: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfellakcim('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel lakcime: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := rendeles('Autonet Import SRL');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel lakcime: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := alkalmazottlekerdezes('Szallasy','Tamas');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE(szam);
+    END IF;
+END;

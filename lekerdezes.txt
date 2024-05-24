@@ -56,6 +56,16 @@ BEGIN
     END IF;
 END;
 /
+--vissza adja az auto darabszamat a tipus szerint
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := dbLekeredezes('Puma');
+    IF( szam != -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az auto darabszama: '||szam);
+    END IF;
+END;
+/
 DECLARE
     szam VARCHAR2(250);
 BEGIN
@@ -71,6 +81,16 @@ BEGIN
     szam := MarkaAlkatresz('Olajszuro');
     IF( szam not like -1)THEN
         DBMS_OUTPUT.PUT_LINE('Az alkatresz markaja: '||szam);
+    END IF;
+END;
+/
+--ez megadja a db szamot az alkatresz neve alapjan
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := DbAlkatresz('Olajszuro');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az alkatresz db-szama: '||szam);
     END IF;
 END;
 /
@@ -138,6 +158,8 @@ BEGIN
 END;
 /
 DESCRIBE Alkalmazottak;
+DESCRIBE Alkatreszek;
+DESCRIBE Autok;
 SELECT * FROM alkalmazottak;
 DESCRIBE Osztalyok;
 ALTER TABLE alkatreszek
