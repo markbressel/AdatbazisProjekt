@@ -128,6 +128,18 @@ BEGIN
     END IF;
 END;
 /
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := alkalmazottlekerdezes('Szallasy','Tamas');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE(szam);
+    END IF;
+END;
+/
+DESCRIBE Alkalmazottak;
+SELECT * FROM alkalmazottak;
+DESCRIBE Osztalyok;
 ALTER TABLE alkatreszek
 ADD db INT;
 SELECT * FROM alkatreszek;
