@@ -69,7 +69,10 @@ namespace WindowsFormsApp1
                             string query4 = "SELECT UzemanyagLekeredezes(:autoTipus) FROM DUAL";
                             string uzemanyag = ExecuteScalarQueryString(query4, connection, new OracleParameter("autoTipus", autoTipus));
 
-                            if (ev == -1 || teljesitmeny == -1 || ar == -1 || uzemanyag == "-1")
+                            string query5 = "SELECT dbLekeredezes(:autoTipus) FROM DUAL";
+                            int db = ExecuteScalarQuery(query5, connection, new OracleParameter("db", autoTipus));
+
+                            if (ev == -1 || teljesitmeny == -1 || ar == -1 || uzemanyag == "-1" || db == -1)
                             {
                                 MessageBox.Show("No such car type exists.");
                                 return;
@@ -81,6 +84,7 @@ namespace WindowsFormsApp1
                             dataTable.Columns.Add("Teljesitmeny", typeof(int));
                             dataTable.Columns.Add("Ar", typeof(int));
                             dataTable.Columns.Add("Uzemanyag", typeof(string));
+                            dataTable.Columns.Add("Db", typeof(int));
 
                             DataRow row = dataTable.NewRow();
                             row["AutoTipus"] = autoTipus;
@@ -88,6 +92,7 @@ namespace WindowsFormsApp1
                             row["Teljesitmeny"] = teljesitmeny;
                             row["Ar"] = ar;
                             row["Uzemanyag"] = uzemanyag;
+                            row["Db"] = db;
                             dataTable.Rows.Add(row);
 
                             dataGridView1.DataSource = dataTable;
@@ -110,7 +115,10 @@ namespace WindowsFormsApp1
                             string query2 = "SELECT MarkaAlkatresz(:alkatreszTipus) FROM DUAL";
                             string marka = ExecuteScalarQueryString(query2, connection, new OracleParameter("alkatreszTipus", alkatreszTipus));
 
-                            if (ar == -1 || marka == "-1")
+                            string query3 = "SELECT DbAlkatresz(:alkatreszTipus) FROM DUAL";
+                            int db = ExecuteScalarQuery(query3, connection, new OracleParameter("db", alkatreszTipus));
+
+                            if (ar == -1 || marka == "-1" || db == -1)
                             {
                                 MessageBox.Show("No such car part type exists.");
                                 return;
@@ -120,11 +128,13 @@ namespace WindowsFormsApp1
                             dataTable.Columns.Add("AlkatreszTipus", typeof(string));
                             dataTable.Columns.Add("Ar", typeof(int));
                             dataTable.Columns.Add("Marka", typeof(string));
+                            dataTable.Columns.Add("Db", typeof(int));
 
                             DataRow row = dataTable.NewRow();
                             row["AlkatreszTipus"] = alkatreszTipus;
                             row["Ar"] = ar;
                             row["Marka"] = marka;
+                            row["Db"] = db;
                             dataTable.Rows.Add(row);
 
                             dataGridView1.DataSource = dataTable;
