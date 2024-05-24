@@ -65,13 +65,79 @@ BEGIN
     END IF;
 END;
 /
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := MarkaAlkatresz('Olajszuro');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az alkatresz markaja: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfeltelo('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel telefonszama: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfelemail('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel emailje: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfelorszag('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel orszaga: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfeltelepules('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel telepulese: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfellakcim('Codrianu','Petru');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel lakcime: '||szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := rendeles('Autonet Import SRL');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE('Az ugyfel lakcime: '||szam);
+    END IF;
+END;
+/
 ALTER TABLE alkatreszek
 ADD db INT;
 SELECT * FROM alkatreszek;
 SELECT * FROM autok;
 SELECT * FROM auto_tipus order by 3;
+SELECT * FROM Ugyfelek;
+SELECT * FROM rendelesek;
 UPDATE alkatreszek
 SET db = 17
 WHERE alkatresz_id like 10;
+SET SERVEROUTPUT ON
 /
 COMMIT;
