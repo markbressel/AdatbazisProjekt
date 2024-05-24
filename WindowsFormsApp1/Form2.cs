@@ -86,6 +86,7 @@ namespace WindowsFormsApp1
                             dataTable.Columns.Add("Teljesitmeny", typeof(int));
                             dataTable.Columns.Add("Ar", typeof(int));
                             dataTable.Columns.Add("Uzemanyag", typeof(string));
+                            
 
                             DataRow row = dataTable.NewRow();
                             row["AutoTipus"] = autoTipus;
@@ -132,6 +133,31 @@ namespace WindowsFormsApp1
                             row["AlkatreszTipus"] = alkatreszTipus;
                             row["Ar"] = ar;
                             row["Marka"] = marka;
+                            dataTable.Rows.Add(row);
+
+                            dataGridView1.DataSource = dataTable;
+                        }
+                        else if (selectedValue == "Alkalmazottak")
+                        {
+                            string keresztnev = dynamicTextBoxes[0].Text;
+                            string vezeteknev = dynamicTextBoxes[1].Text;
+
+                            // Ár lekérdezése
+                            string query1 = $"SELECT alkalmazottlekerdezes('{vezeteknev}', '{keresztnev}') FROM DUAL";
+                            string alkalmazott = ExecuteScalarQueryString(query1, connection);
+
+                            if (alkalmazott == "-1")
+                            {
+                                MessageBox.Show("No such employee exists.");
+                                return;
+                            }
+
+                            DataTable dataTable = new DataTable();
+                            dataTable.Columns.Add("Alkalmazott", typeof(string));
+
+                            DataRow row = dataTable.NewRow();
+                            row["Alkalmazott"] = alkalmazott;
+                            
                             dataTable.Rows.Add(row);
 
                             dataGridView1.DataSource = dataTable;
