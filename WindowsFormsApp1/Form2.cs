@@ -28,7 +28,7 @@ namespace WindowsFormsApp1
             dataGridView1 = new DataGridView
             {
                 Location = new System.Drawing.Point(50, 150),
-                Size = new System.Drawing.Size(500, 200),
+                Size = new System.Drawing.Size(800, 200),
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
             };
             this.Controls.Add(dataGridView1);
@@ -266,6 +266,8 @@ namespace WindowsFormsApp1
             const int margin = 30;
 
             int currentX = 200;
+            dynamicTextBoxes.Clear();
+            ClearTextBoxes();
 
             for (int i = 0; i < count; i++)
             {
@@ -301,6 +303,7 @@ namespace WindowsFormsApp1
                 {
                     this.Controls.Remove(control);
                     control.Dispose();
+
                 }
             }
             dynamicTextBoxes.Clear();
