@@ -208,13 +208,13 @@ namespace WindowsFormsApp1
 
         private void updateButton_Click(object sender, EventArgs e)
         {
-            if (dynamicTextBoxes.Count >= 7)
+            if (comboBox2.SelectedItem.ToString() == "UjRendeles")
             {
                 string rendelesNev = dynamicTextBoxes[0].Text;
-                int darabszam;
-                if (!int.TryParse(dynamicTextBoxes[1].Text, out darabszam))
+                long darabszam;
+                if (!long.TryParse(dynamicTextBoxes[1].Text, out darabszam))
                 {
-                    MessageBox.Show("Please enter a valid number for quantity.");
+                    MessageBox.Show("Please enter a valid quentity.");
                     return;
                 }
                 string alkalmazottVezeteknev = dynamicTextBoxes[2].Text;
@@ -242,7 +242,7 @@ namespace WindowsFormsApp1
                         using (OracleCommand command = new OracleCommand(plsql, connection))
                         {
                             command.Parameters.Add(new OracleParameter("rendelesNev", OracleDbType.Varchar2)).Value = rendelesNev;
-                            command.Parameters.Add(new OracleParameter("darabszam", OracleDbType.Int32)).Value = darabszam;
+                            command.Parameters.Add(new OracleParameter("darabszam", OracleDbType.Long)).Value = darabszam;
                             command.Parameters.Add(new OracleParameter("alkalmazottVezeteknev", OracleDbType.Varchar2)).Value = alkalmazottVezeteknev;
                             command.Parameters.Add(new OracleParameter("alkalmazottKeresztnev", OracleDbType.Varchar2)).Value = alkalmazottKeresztnev;
                             command.Parameters.Add(new OracleParameter("ugyfelVezeteknev", OracleDbType.Varchar2)).Value = ugyfelVezeteknev;
@@ -267,11 +267,127 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-            else
+            else if (comboBox2.SelectedItem.ToString() == "UjAlkalmazott")
             {
-                MessageBox.Show("Please fill in all fields for the order.");
+                string alkalmazottVezeteknev = dynamicTextBoxes[0].Text;
+                string alkalmazottKeresztnev = dynamicTextBoxes[1].Text;
+                long fizetes;
+                if (!long.TryParse(dynamicTextBoxes[2].Text, out fizetes))
+                {
+                    MessageBox.Show("Please enter a valid salary.");
+                    return;
+                }
+                string telefonszam = dynamicTextBoxes[3].Text;
+                string osztaly = dynamicTextBoxes[4].Text;
+
+                AddNewEmployee(alkalmazottVezeteknev, alkalmazottKeresztnev, fizetes, telefonszam, osztaly);
+            }
+            else if (comboBox2.SelectedItem.ToString() == "UjUgyfel")
+            {
+                string vezeteknev = dynamicTextBoxes[0].Text;
+                string keresztnev = dynamicTextBoxes[1].Text;
+                string telefonszam = dynamicTextBoxes[2].Text;
+                string email = dynamicTextBoxes[3].Text;
+                string orszag = dynamicTextBoxes[4].Text;
+                string telepules = dynamicTextBoxes[5].Text;
+                string lakcim = dynamicTextBoxes[6].Text;
+
+                AddNewCustomer(vezeteknev, keresztnev, telefonszam, email, orszag, telepules, lakcim);
             }
         }
+
+        private void AddNewEmployee(string vezeteknev, string keresztnev, long fizetes, string telefonszam, string osztaly)
+        {
+            string connectionString = "User Id=C##Info6;Password=Sapi12345;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=217.73.170.84)(PORT=44678))(CONNECT_DATA=(SID=oRCL)))";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string plsql = @"
+            DECLARE
+                v_result VARCHAR2(4000);
+            BEGIN
+                v_result := ujAlkalmazott(:vezeteknev, :keresztnev, :fizetes, :telefonszam, :osztaly);
+                :result := v_result;
+            END;";
+
+                    using (OracleCommand command = new OracleCommand(plsql, connection))
+                    {
+                        command.Parameters.Add(new OracleParameter("vezeteknev", OracleDbType.Varchar2)).Value = vezeteknev;
+                        command.Parameters.Add(new OracleParameter("keresztnev", OracleDbType.Varchar2)).Value = keresztnev;
+                        command.Parameters.Add(new OracleParameter("fizetes", OracleDbType.Long)).Value = fizetes;
+                        command.Parameters.Add(new OracleParameter("telefonszam", OracleDbType.Varchar2)).Value = telefonszam;
+                        command.Parameters.Add(new OracleParameter("osztaly", OracleDbType.Varchar2)).Value = osztaly;
+
+                        var resultParam = new OracleParameter("result", OracleDbType.Varchar2, 4000)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(resultParam);
+
+                        command.ExecuteNonQuery();
+
+                        string result = resultParam.Value.ToString();
+                        MessageBox.Show(result);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred: " + ex.Message);
+                }
+            }
+        }
+
+        private void AddNewCustomer(string vezeteknev, string keresztnev, string telefonszam, string email, string orszag, string telepules, string lakcim)
+        {
+            string connectionString = "User Id=C##Info6;Password=Sapi12345;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=217.73.170.84)(PORT=44678))(CONNECT_DATA=(SID=oRCL)))";
+
+            using (OracleConnection connection = new OracleConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string plsql = @"
+            DECLARE
+                v_result VARCHAR2(4000);
+            BEGIN
+                v_result := ujUgyfel(:vezeteknev, :keresztnev, :telefonszam, :email, :orszag, :telepules, :lakcim);
+                :result := v_result;
+            END;";
+
+                    using (OracleCommand command = new OracleCommand(plsql, connection))
+                    {
+                        command.Parameters.Add(new OracleParameter("vezeteknev", OracleDbType.Varchar2)).Value = vezeteknev;
+                        command.Parameters.Add(new OracleParameter("keresztnev", OracleDbType.Varchar2)).Value = keresztnev;
+                        command.Parameters.Add(new OracleParameter("telefonszam", OracleDbType.Varchar2)).Value = telefonszam;
+                        command.Parameters.Add(new OracleParameter("email", OracleDbType.Varchar2)).Value = email;
+                        command.Parameters.Add(new OracleParameter("orszag", OracleDbType.Varchar2)).Value = orszag;
+                        command.Parameters.Add(new OracleParameter("telepules", OracleDbType.Varchar2)).Value = telepules;
+                        command.Parameters.Add(new OracleParameter("lakcim", OracleDbType.Varchar2)).Value = lakcim;
+
+                        var resultParam = new OracleParameter("result", OracleDbType.Varchar2, 4000)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(resultParam);
+
+                        command.ExecuteNonQuery();
+
+                        string result = resultParam.Value.ToString();
+                        MessageBox.Show(result);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred: " + ex.Message);
+                }
+            }
+        }
+
 
 
         private int ExecuteScalarQuery(string query, OracleConnection connection, params OracleParameter[] parameters)

@@ -60,7 +60,7 @@
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(56, 19);
             this.updateButton.TabIndex = 1;
-            this.updateButton.Text = "Update";
+            this.updateButton.Text = "Insert";
             this.updateButton.UseVisualStyleBackColor = true;
             this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
