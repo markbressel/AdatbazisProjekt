@@ -44,9 +44,10 @@
             // 
             // selectbutton
             // 
-            this.selectbutton.Location = new System.Drawing.Point(31, 36);
+            this.selectbutton.Location = new System.Drawing.Point(23, 29);
+            this.selectbutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.selectbutton.Name = "selectbutton";
-            this.selectbutton.Size = new System.Drawing.Size(75, 23);
+            this.selectbutton.Size = new System.Drawing.Size(56, 19);
             this.selectbutton.TabIndex = 0;
             this.selectbutton.Text = "Select";
             this.selectbutton.UseVisualStyleBackColor = true;
@@ -54,18 +55,21 @@
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(31, 66);
+            this.updateButton.Location = new System.Drawing.Point(23, 54);
+            this.updateButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(75, 23);
+            this.updateButton.Size = new System.Drawing.Size(56, 19);
             this.updateButton.TabIndex = 1;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(31, 97);
+            this.deleteButton.Location = new System.Drawing.Point(23, 79);
+            this.deleteButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.Size = new System.Drawing.Size(56, 19);
             this.deleteButton.TabIndex = 2;
             this.deleteButton.Text = "Delete";
             this.deleteButton.UseVisualStyleBackColor = true;
@@ -83,18 +87,18 @@
             this.asdToolStripMenuItem,
             this.asdToolStripMenuItem1});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(102, 52);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(93, 48);
             // 
             // asdToolStripMenuItem
             // 
             this.asdToolStripMenuItem.Name = "asdToolStripMenuItem";
-            this.asdToolStripMenuItem.Size = new System.Drawing.Size(101, 24);
+            this.asdToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.asdToolStripMenuItem.Text = "asd";
             // 
             // asdToolStripMenuItem1
             // 
             this.asdToolStripMenuItem1.Name = "asdToolStripMenuItem1";
-            this.asdToolStripMenuItem1.Size = new System.Drawing.Size(101, 24);
+            this.asdToolStripMenuItem1.Size = new System.Drawing.Size(92, 22);
             this.asdToolStripMenuItem1.Text = "asd";
             // 
             // comboBox1
@@ -105,9 +109,10 @@
             "Alkatreszek",
             "Alkalmazottak",
             "Ugyfelek"});
-            this.comboBox1.Location = new System.Drawing.Point(112, 36);
+            this.comboBox1.Location = new System.Drawing.Point(84, 29);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
+            this.comboBox1.Size = new System.Drawing.Size(92, 21);
             this.comboBox1.TabIndex = 5;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -118,9 +123,10 @@
             "UjRendeles",
             "UjAlkalmazott",
             "UjUgyfel"});
-            this.comboBox2.Location = new System.Drawing.Point(112, 66);
+            this.comboBox2.Location = new System.Drawing.Point(84, 54);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 24);
+            this.comboBox2.Size = new System.Drawing.Size(92, 21);
             this.comboBox2.TabIndex = 6;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -131,26 +137,29 @@
             "RendelesTorles",
             "AlkalmazottTorles",
             "UgyfelTorles"});
-            this.comboBox3.Location = new System.Drawing.Point(112, 96);
+            this.comboBox3.Location = new System.Drawing.Point(84, 78);
+            this.comboBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 24);
+            this.comboBox3.Size = new System.Drawing.Size(92, 21);
             this.comboBox3.TabIndex = 7;
             // 
             // Form2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 553);
+            this.ClientSize = new System.Drawing.Size(946, 449);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.selectbutton);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Ford West Motors";
+            this.Text = "Ford West";
+            this.Load += new System.EventHandler(this.Form2_Load);
             this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
 

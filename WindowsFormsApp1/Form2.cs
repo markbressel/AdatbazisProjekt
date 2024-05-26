@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace WindowsFormsApp1
 {
@@ -205,6 +206,74 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            if (dynamicTextBoxes.Count >= 7)
+            {
+                string rendelesNev = dynamicTextBoxes[0].Text;
+                int darabszam;
+                if (!int.TryParse(dynamicTextBoxes[1].Text, out darabszam))
+                {
+                    MessageBox.Show("Please enter a valid number for quantity.");
+                    return;
+                }
+                string alkalmazottVezeteknev = dynamicTextBoxes[2].Text;
+                string alkalmazottKeresztnev = dynamicTextBoxes[3].Text;
+                string ugyfelVezeteknev = dynamicTextBoxes[4].Text;
+                string ugyfelKeresztnev = dynamicTextBoxes[5].Text;
+                string termek = dynamicTextBoxes[6].Text;
+
+                string connectionString = "User Id=C##Info6;Password=Sapi12345;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=217.73.170.84)(PORT=44678))(CONNECT_DATA=(SID=oRCL)))";
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        string plsql = @"
+                DECLARE
+                    v_result VARCHAR2(4000);
+                BEGIN
+                    v_result := ujRendeles(:rendelesNev, :darabszam, :alkalmazottVezeteknev, :alkalmazottKeresztnev, :ugyfelVezeteknev, :ugyfelKeresztnev, :termek);
+                    :result := v_result;
+                END;";
+
+                        using (OracleCommand command = new OracleCommand(plsql, connection))
+                        {
+                            command.Parameters.Add(new OracleParameter("rendelesNev", OracleDbType.Varchar2)).Value = rendelesNev;
+                            command.Parameters.Add(new OracleParameter("darabszam", OracleDbType.Int32)).Value = darabszam;
+                            command.Parameters.Add(new OracleParameter("alkalmazottVezeteknev", OracleDbType.Varchar2)).Value = alkalmazottVezeteknev;
+                            command.Parameters.Add(new OracleParameter("alkalmazottKeresztnev", OracleDbType.Varchar2)).Value = alkalmazottKeresztnev;
+                            command.Parameters.Add(new OracleParameter("ugyfelVezeteknev", OracleDbType.Varchar2)).Value = ugyfelVezeteknev;
+                            command.Parameters.Add(new OracleParameter("ugyfelKeresztnev", OracleDbType.Varchar2)).Value = ugyfelKeresztnev;
+                            command.Parameters.Add(new OracleParameter("termek", OracleDbType.Varchar2)).Value = termek;
+
+                            var resultParam = new OracleParameter("result", OracleDbType.Varchar2, 4000)
+                            {
+                                Direction = ParameterDirection.Output
+                            };
+                            command.Parameters.Add(resultParam);
+
+                            command.ExecuteNonQuery();
+
+                            string result = resultParam.Value.ToString();
+                            MessageBox.Show(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please fill in all fields for the order.");
+            }
+        }
+
+
         private int ExecuteScalarQuery(string query, OracleConnection connection, params OracleParameter[] parameters)
         {
             using (OracleCommand command = new OracleCommand(query, connection))
@@ -334,5 +403,9 @@ namespace WindowsFormsApp1
             dynamicTextBoxes.Clear();
         }
 
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
