@@ -56,20 +56,20 @@ namespace WindowsFormsApp1
             switch (selectedValue)
             {
                 case "Autok":
-                    AddTextBox(1, posY);
+                    AddTextBox(1, posY,1);
                     dynamicTextBoxes[0].Text = "Auto Tipusa";
                     break;
                 case "Alkatreszek":
-                    AddTextBox(1, posY);
+                    AddTextBox(1, posY, 1);
                     dynamicTextBoxes[0].Text = "Alkatresz Neve";
                     break;
                 case "Alkalmazottak":
-                    AddTextBox(2, posY);
+                    AddTextBox(2, posY, 1);
                     dynamicTextBoxes[0].Text = "Vezetek Nev";
                     dynamicTextBoxes[1].Text = "Kereszt Nev";
                     break;
                 case "Ugyfelek":
-                    AddTextBox(2, posY);
+                    AddTextBox(2, posY, 1);
                     dynamicTextBoxes[0].Text = "Vezetek Nev";
                     dynamicTextBoxes[1].Text = "Kereszt Nev";
                     break;
@@ -261,7 +261,7 @@ namespace WindowsFormsApp1
             switch (selectedValue)
             {
                 case "UjRendeles":
-                    AddTextBox(7, posY);
+                    AddTextBox(7, posY, 2);
                     dynamicTextBoxes[0].Text = "Rendeles neve";
                     dynamicTextBoxes[1].Text = "Darab Szam";
                     dynamicTextBoxes[2].Text = "Alkalmazott V.Nev";
@@ -271,7 +271,7 @@ namespace WindowsFormsApp1
                     dynamicTextBoxes[6].Text = "Termek Nev";
                     break;
                 case "UjAlkalmazott":
-                    AddTextBox(5, posY);
+                    AddTextBox(5, posY, 2);
                     dynamicTextBoxes[0].Text = "Alkalmazott V.Nev";
                     dynamicTextBoxes[1].Text = "Alkalmazott K.Nev";
                     dynamicTextBoxes[2].Text = "Fizetes";
@@ -279,7 +279,7 @@ namespace WindowsFormsApp1
                     dynamicTextBoxes[4].Text = "Osztaly neve";
                     break;
                 case "UjUgyfel":
-                    AddTextBox(7, posY);
+                    AddTextBox(7, posY, 2);
                     dynamicTextBoxes[0].Text = "Ugyfel V.Nev";
                     dynamicTextBoxes[1].Text = "Ugyfel K.Nev";
                     dynamicTextBoxes[2].Text = "Telefonszam";
@@ -489,16 +489,16 @@ namespace WindowsFormsApp1
             switch (selectedValue)
             {
                 case "RendelesTorles":
-                    AddTextBox(1, posY);
+                    AddTextBox(1, posY,3);
                     dynamicTextBoxes[0].Text = "Rendeles Neve";
                     break;
                 case "UgyfelTorles":
-                    AddTextBox(2, posY);
+                    AddTextBox(2, posY,3);
                     dynamicTextBoxes[0].Text = "Vezetek Nev";
                     dynamicTextBoxes[1].Text = "Kereszt Nev";
                     break;
                 case "AlkalmazottTorles":
-                    AddTextBox(2, posY);
+                    AddTextBox(2, posY,3);
                     dynamicTextBoxes[0].Text = "Vezetek Nev";
                     dynamicTextBoxes[1].Text = "Kereszt Nev";
                     break;
@@ -642,7 +642,7 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void AddTextBox(int count, int posY)
+        private void AddTextBox(int count, int posY, int ComboBoxNr)
         {
             const int textBoxWidth = 100;
             const int textBoxHeight = 25;
@@ -653,27 +653,89 @@ namespace WindowsFormsApp1
             dynamicTextBoxes.Clear();
             ClearTextBoxes();
 
-            for (int i = 0; i < count; i++)
+            if (ComboBoxNr == 1)
             {
-                TextBox textBox = new TextBox
-                {
-                    Name = "textBox" + (i + 1),
-                    Location = new System.Drawing.Point(currentX, posY),
-                    Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
-                };
-                textBox.KeyDown += new KeyEventHandler(OnKeyDownHandler);
-                this.Controls.Add(textBox);
-                dynamicTextBoxes.Add(textBox);
 
-                currentX += textBoxWidth + spacing;
+                for (int i = 0; i < count; i++)
+                {
+                    TextBox textBox = new TextBox
+                    {
+                        Name = "textBox" + (i + 1),
+                        Location = new System.Drawing.Point(currentX, posY),
+                        Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
+                    };
+                    textBox.KeyDown += new KeyEventHandler(HandleCombobox1);
+                    this.Controls.Add(textBox);
+                    dynamicTextBoxes.Add(textBox);
+
+                    currentX += textBoxWidth + spacing;
+                }
+            }
+
+            if (ComboBoxNr == 2)
+            {
+
+                for (int i = 0; i < count; i++)
+                {
+                    TextBox textBox = new TextBox
+                    {
+                        Name = "textBox" + (i + 1),
+                        Location = new System.Drawing.Point(currentX, posY),
+                        Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
+                    };
+                    textBox.KeyDown += new KeyEventHandler(HandleCombobox2);
+                    this.Controls.Add(textBox);
+                    dynamicTextBoxes.Add(textBox);
+
+                    currentX += textBoxWidth + spacing;
+                }
+            }
+
+            if (ComboBoxNr == 3)
+            {
+
+                for (int i = 0; i < count; i++)
+                {
+                    TextBox textBox = new TextBox
+                    {
+                        Name = "textBox" + (i + 1),
+                        Location = new System.Drawing.Point(currentX, posY),
+                        Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
+                    };
+                    textBox.KeyDown += new KeyEventHandler(HandleCombobox3);
+                    this.Controls.Add(textBox);
+                    dynamicTextBoxes.Add(textBox);
+
+                    currentX += textBoxWidth + spacing;
+                }
             }
         }
 
-        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        private void HandleCombobox1(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 selectbutton_Click(sender, e);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void HandleCombobox2(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                updateButton_Click(sender, e);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void HandleCombobox3(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                deleteButton_Click(sender, e);
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
