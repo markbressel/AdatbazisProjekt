@@ -35,6 +35,32 @@ namespace WindowsFormsApp1
             this.Controls.Add(dataGridView1);
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearTextBoxes();
+
+            string selectedValue = comboBox1.SelectedItem.ToString();
+            int posY = comboBox1.Location.Y;
+
+            switch (selectedValue)
+            {
+                case "Autok":
+                    AddTextBox(1, posY);
+                    break;
+                case "Alkatreszek":
+                    AddTextBox(1, posY);
+                    break;
+                case "Alkalmazottak":
+                    AddTextBox(2, posY);
+                    break;
+                case "Ugyfelek":
+                    AddTextBox(2, posY);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void selectbutton_Click(object sender, EventArgs e)
         {
             string selectedValue = comboBox1.SelectedItem?.ToString();
@@ -203,6 +229,50 @@ namespace WindowsFormsApp1
                 {
                     MessageBox.Show("An error occurred: " + ex.Message);
                 }
+            }
+        }
+
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearTextBoxes();
+
+            string selectedValue = comboBox2.SelectedItem.ToString();
+            int posY = comboBox2.Location.Y;
+
+            ClearTextBoxes();
+            switch (selectedValue)
+            {
+                case "UjRendeles":
+                    AddTextBox(7, posY);
+                    dynamicTextBoxes[0].Text = "Rendeles neve";
+                    dynamicTextBoxes[1].Text = "Darab Szam";
+                    dynamicTextBoxes[2].Text = "Alkalmazott V.Nev";
+                    dynamicTextBoxes[3].Text = "Alkalmazott K.Nev";
+                    dynamicTextBoxes[4].Text = "Ugyfel V.Nev";
+                    dynamicTextBoxes[5].Text = "Ugyfel K.Nev";
+                    dynamicTextBoxes[6].Text = "Termek Nev";
+                    break;
+                case "UjAlkalmazott":
+                    AddTextBox(5, posY);
+                    dynamicTextBoxes[0].Text = "Alkalmazott V.Nev";
+                    dynamicTextBoxes[1].Text = "Alkalmazott K.Nev";
+                    dynamicTextBoxes[2].Text = "Fizetes";
+                    dynamicTextBoxes[3].Text = "Telefonszam";
+                    dynamicTextBoxes[4].Text = "Osztaly neve";
+                    break;
+                case "UjUgyfel":
+                    AddTextBox(7, posY);
+                    dynamicTextBoxes[0].Text = "Ugyfel V.Nev";
+                    dynamicTextBoxes[1].Text = "Ugyfel K.Nev";
+                    dynamicTextBoxes[2].Text = "Telefonszam";
+                    dynamicTextBoxes[3].Text = "Email";
+                    dynamicTextBoxes[4].Text = "Orszag";
+                    dynamicTextBoxes[5].Text = "Telepules";
+                    dynamicTextBoxes[6].Text = "Lakcim";
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -389,83 +459,14 @@ namespace WindowsFormsApp1
         }
 
 
-
-        private int ExecuteScalarQuery(string query, OracleConnection connection, params OracleParameter[] parameters)
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using (OracleCommand command = new OracleCommand(query, connection))
-            {
-                if (parameters != null)
-                {
-                    command.Parameters.AddRange(parameters);
-                }
 
-                object result = command.ExecuteScalar();
-                return result != null ? Convert.ToInt32(result) : -1;
-            }
         }
 
-        private string ExecuteScalarQueryString(string query, OracleConnection connection, params OracleParameter[] parameters)
+        private void deleteButton_Click(object sender, EventArgs e)
         {
-            using (OracleCommand command = new OracleCommand(query, connection))
-            {
-                if (parameters != null)
-                {
-                    command.Parameters.AddRange(parameters);
-                }
 
-                object result = command.ExecuteScalar();
-                return result != null ? result.ToString() : "-1";
-            }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ClearTextBoxes();
-
-            string selectedValue = comboBox1.SelectedItem.ToString();
-            int posY = comboBox1.Location.Y;
-
-            switch (selectedValue)
-            {
-                case "Autok":
-                    AddTextBox(1, posY);
-                    break;
-                case "Alkatreszek":
-                    AddTextBox(1, posY);
-                    break;
-                case "Alkalmazottak":
-                    AddTextBox(2, posY);
-                    break;
-                case "Ugyfelek":
-                    AddTextBox(2, posY);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ClearTextBoxes();
-
-            string selectedValue = comboBox2.SelectedItem.ToString();
-            int posY = comboBox2.Location.Y;
-
-            ClearTextBoxes();
-            switch (selectedValue)
-            {
-                case "UjRendeles":
-                    AddTextBox(7, posY);
-                    break;
-                case "UjAlkalmazott":
-                    AddTextBox(5, posY);
-                    break;
-                case "UjUgyfel":
-                    AddTextBox(7, posY);
-                    break;
-                default:
-                    break;
-            }
         }
 
         private void AddTextBox(int count, int posY)
@@ -487,7 +488,7 @@ namespace WindowsFormsApp1
                     Location = new System.Drawing.Point(currentX, posY),
                     Size = new System.Drawing.Size(textBoxWidth, textBoxHeight)
                 };
-                textBox.KeyDown += new KeyEventHandler(OnKeyDownHandler); // Attach the KeyDown event handler
+                textBox.KeyDown += new KeyEventHandler(OnKeyDownHandler);
                 this.Controls.Add(textBox);
                 dynamicTextBoxes.Add(textBox);
 
@@ -519,9 +520,33 @@ namespace WindowsFormsApp1
             dynamicTextBoxes.Clear();
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+        private int ExecuteScalarQuery(string query, OracleConnection connection, params OracleParameter[] parameters)
         {
+            using (OracleCommand command = new OracleCommand(query, connection))
+            {
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters);
+                }
 
+                object result = command.ExecuteScalar();
+                return result != null ? Convert.ToInt32(result) : -1;
+            }
         }
+
+        private string ExecuteScalarQueryString(string query, OracleConnection connection, params OracleParameter[] parameters)
+        {
+            using (OracleCommand command = new OracleCommand(query, connection))
+            {
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters);
+                }
+
+                object result = command.ExecuteScalar();
+                return result != null ? result.ToString() : "-1";
+            }
+        }
+
     }
 }
