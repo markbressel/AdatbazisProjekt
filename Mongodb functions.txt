@@ -1,0 +1,343 @@
+db.runCommand({
+  eval: function(nev, pss) {
+    var felhasznalo = db.Felhasznalok.findOne({ felhasznalonev: nev });
+    if (felhasznalo) {
+      return felhasznalo.felhasznalo_id;
+    } else {
+      var max_id = db.Felhasznalok.find().sort({ felhasznalo_id: -1 }).limit(1).next().felhasznalo_id + 1 || 1;
+      var szerep_id = db.Szerepkorok.findOne({ szerepnev: 'csakolvas' }).szerep_id;
+      db.Felhasznalok.insertOne({ felhasznalo_id: max_id, felhasznalonev: nev, jelszo: pss, szerep_id: szerep_id });
+      return max_id;
+    }
+  },
+  args: [nev, pss]
+});
+
+
+//----------------------------------------------------------
+
+db.runCommand({
+  eval: function() {
+    var min_id = 1;
+    var cursor = db.Felhasznalok.find().sort({ felhasznalo_id: 1 });
+    cursor.forEach(function(doc) {
+      if (doc.felhasznalo_id > min_id) {
+        return min_id;
+      }
+      min_id++;
+    });
+    return min_id;
+  }
+});
+
+
+//----------------------------------------------------------
+
+
+db.runCommand({
+  eval: function(nev, pss) {
+    var felhasznalo = db.Felhasznalok.findOne({ felhasznalonev: nev });
+    if (felhasznalo) {
+      db.Felhasznalok.deleteOne({ felhasznalo_id: felhasznalo.felhasznalo_id });
+      return felhasznalo.felhasznalo_id;
+    } else {
+      return -1;
+    }
+  },
+  args: [nev, pss]
+});
+
+//----------------------------------------------------------
+
+
+db.runCommand({
+  eval: function(tipus) {
+    var autoTipus = db.auto_tipus.findOne({ auto_tipus: tipus });
+    if (autoTipus) {
+      var auto = db.autok.findOne({ auto_tipus_id: autoTipus.auto_tipus_id });
+      if (auto) {
+        return auto.auto_ev;
+      } else {
+        return -1;
+      }
+    } else {
+      return -1;
+    }
+  },
+  args: [tipus]
+});
+
+//-----------------------------------------
+
+db.runCommand({
+  eval: function(tipus) {
+    var autoTipus = db.auto_tipus.findOne({ auto_tipus: tipus });
+    if (autoTipus) {
+      var auto = db.autok.findOne({ auto_tipus_id: autoTipus.auto_tipus_id });
+      if (auto) {
+        return auto.auto_teljesitmeny;
+      } else {
+        return -1;
+      }
+    } else {
+      return -1;
+    }
+  },
+  args: [tipus]
+});
+
+//---------------------------------
+
+db.runCommand({
+  eval: function(tipus) {
+    var autoTipus = db.auto_tipus.findOne({ auto_tipus: tipus });
+    if (autoTipus) {
+      var auto = db.autok.findOne({ auto_tipus_id: autoTipus.auto_tipus_id });
+      if (auto) {
+        return auto.auto_ar;
+      } else {
+        return -1;
+      }
+    } else {
+      return -1;
+    }
+  },
+  args: [tipus]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(tipus) {
+    var autoTipus = db.auto_tipus.findOne({ auto_tipus: tipus });
+    if (autoTipus) {
+      var auto = db.autok.findOne({ auto_tipus_id: autoTipus.auto_tipus_id });
+      if (auto) {
+        return auto.auto_uzemanyag;
+      } else {
+        return -1;
+      }
+    } else {
+      return -1;
+    }
+  },
+  args: [tipus]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(nev) {
+    var alkatresz = db.Alkatreszek.findOne({ alkatresz_nev: nev });
+    if (alkatresz) {
+      return alkatresz.alkatresz_ar;
+    } else {
+      return -1;
+    }
+  },
+  args: [nev]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(nev) {
+    var alkatresz = db.Alkatreszek.findOne({ alkatresz_nev: nev });
+    if (alkatresz) {
+      return alkatresz.db;
+    } else {
+      return -1;
+    }
+  },
+  args: [nev]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(tipus) {
+    var alkatresz = db.Alkatreszek.findOne({ alkatresz_nev: tipus });
+    if (alkatresz) {
+      return alkatresz.alkatresz_marka;
+    } else {
+      return -1;
+    }
+  },
+  args: [tipus]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(vnev, knev) {
+    var ugyfel = db.Ugyfelek.findOne({ ugyfel_vezeteknev: vnev, ugyfel_keresztnev: knev });
+    if (ugyfel) {
+      return ugyfel.ugyfel_telefonszam;
+    } else {
+      return -1;
+    }
+  },
+  args: [vnev, knev]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(vnev, knev) {
+    var ugyfel = db.Ugyfelek.findOne({ ugyfel_vezeteknev: vnev, ugyfel_keresztnev: knev });
+    if (ugyfel) {
+      return ugyfel.ugyfel_email;
+    } else {
+      return -1;
+    }
+  },
+  args: [vnev, knev]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(vnev, knev) {
+    var ugyfel = db.Ugyfelek.findOne({ ugyfel_vezeteknev: vnev, ugyfel_keresztnev: knev });
+    if (ugyfel) {
+      return ugyfel.ugyfel_orszag;
+    } else {
+      return -1;
+    }
+  },
+  args: [vnev, knev]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(vnev, knev) {
+    var ugyfel = db.Ugyfelek.findOne({ ugyfel_vezeteknev: vnev, ugyfel_keresztnev: knev });
+    if (ugyfel) {
+      return ugyfel.ugyfel_telepules;
+    } else {
+      return -1;
+    }
+  },
+  args: [vnev, knev]
+});
+
+
+//
+
+db.runCommand({
+  eval: function(vnev, knev) {
+    var ugyfel = db.Ugyfelek.findOne({ ugyfel_vezeteknev: vnev, ugyfel_keresztnev: knev });
+    if (ugyfel) {
+      return ugyfel.ugyfel_lakcim;
+    } else {
+      return -1;
+    }
+  },
+  args: [vnev, knev]
+});
+
+
+//
+
+
+function ujAlkalmazott(vnev, knev, fizetes, teloszam, osztaly_id) {
+    const collection = db.getCollection("Alkalmazottak");
+    const maxIdDoc = collection.find().sort({ ALKALMAZOTT_ID: -1 }).limit(1).toArray();
+    const maxId = maxIdDoc.length > 0 ? maxIdDoc[0].ALKALMAZOTT_ID : 0;
+    const alkid = maxId + 1;
+
+    try {
+        collection.insertOne({
+            ALKALMAZOTT_ID: alkid,
+            ALKALMAZOTT_VEZETEKNEV: vnev,
+            ALKALMAZOTT_KERESZTNEV: knev,
+            ALKALMAZOTT_FIZETES: fizetes,
+            ALKALMAZOTT_TELEFONSZAM: teloszam,
+            OSZTALY_ID: osztaly_id
+        });
+        return 'Sikeresen beszúrt egy új alkalmazottat az ID: ' + alkid;
+    } catch (error) {
+        print('Valami hiba történt az új alkalmazott beszúrása közben!');
+        return 'Hiba történt az új alkalmazott beszúrása közben!';
+    }
+}
+
+
+
+//
+
+
+function felhasznaloModositas(felh_id, uj_nev, uj_pss, uj_szerep) {
+    const collection = db.getCollection("Felhasznalok");
+
+    try {
+        const result = collection.updateOne(
+            { felhasznalo_id: felh_id },
+            { $set: { felhasznalonev: uj_nev, jelszo: uj_pss, szerep_id: uj_szerep } }
+        );
+        if (result.modifiedCount > 0) {
+            return 'Sikeresen módosította a felhasználó adatait!';
+        } else {
+            return 'Nem történt változás a felhasználó adataiban.';
+        }
+    } catch (error) {
+        print('Valami hiba történt a felhasználó módosítása közben!');
+        return 'Hiba történt a felhasználó módosítása közben!';
+    }
+}
+
+
+
+
+
+//
+
+function felhasznaloSzerepModositas(felh_id, uj_szerep) {
+    const collection = db.getCollection("Felhasznalok");
+
+    try {
+        const result = collection.updateOne(
+            { felhasznalo_id: felh_id },
+            { $set: { szerep_id: uj_szerep } }
+        );
+        if (result.modifiedCount > 0) {
+            return 'Sikeresen módosította a felhasználó szerepét!';
+        } else {
+            return 'Nem történt változás a felhasználó szerepében.';
+        }
+    } catch (error) {
+        print('Valami hiba történt a felhasználó szerepének módosítása közben!');
+        return 'Hiba történt a felhasználó szerepének módosítása közben!';
+    }
+}
+
+
+///
+
+function autoTorles(tipus) {
+    const autoTipusCollection = db.getCollection("auto_tipus");
+    const autokCollection = db.getCollection("autok");
+
+    try {
+        const autoTipusDoc = autoTipusCollection.findOne({ auto_tipus: tipus });
+        if (autoTipusDoc) {
+            const autoTipusId = autoTipusDoc.auto_tipus_id;
+            autokCollection.deleteMany({ auto_tipus_id: autoTipusId });
+            return 'Sikeresen törölte az autót!';
+        } else {
+            return 'Nincs ilyen auto tipus!';
+        }
+    } catch (error) {
+        print('Valami hiba történt az autó törlése közben!');
+        return 'Hiba történt az autó törlése közben!';
+    }
+}
