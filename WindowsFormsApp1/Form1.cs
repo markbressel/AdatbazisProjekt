@@ -53,7 +53,7 @@ namespace WindowsFormsApp1
                                         break;
                                     case 3:
                                         MessageBox.Show("Korlatozott felhasznalo");
-                                        // Korlátozott user belépés
+                                        // Korlátozott user belépés 
                                         mainForm.AdjustForLimitedUser();
                                         break;
                                     default:
