@@ -22,6 +22,14 @@ namespace WindowsFormsApp1
             // Gombok és mezők elrejtése
             updateButton.Visible = false;
             deleteButton.Visible = false;
+            comboBox2.Visible = false;
+            comboBox3.Visible = false;
+        }
+
+        public void AdjustForLimitedUser()
+        {
+            deleteButton.Visible = false;
+            comboBox3.Visible= false;
         }
 
         private void InitializeDataGridView()

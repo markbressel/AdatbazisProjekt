@@ -52,8 +52,9 @@ namespace WindowsFormsApp1
                                         mainForm.AdjustForReadOnlyUser();
                                         break;
                                     case 3:
+                                        MessageBox.Show("Korlatozott felhasznalo");
                                         // Korlátozott user belépés
-                                        //mainForm.AdjustForRestrictedUser(); // Add custom method to adjust for restricted access
+                                        mainForm.AdjustForLimitedUser();
                                         break;
                                     default:
                                         MessageBox.Show("Ismeretlen szerep azonosító.");
