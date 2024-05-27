@@ -42,19 +42,28 @@ namespace WindowsFormsApp1
             string selectedValue = comboBox1.SelectedItem.ToString();
             int posY = comboBox1.Location.Y;
 
+            ClearTextBoxes();
+
+
             switch (selectedValue)
             {
                 case "Autok":
                     AddTextBox(1, posY);
+                    dynamicTextBoxes[0].Text = "Auto Tipusa";
                     break;
                 case "Alkatreszek":
                     AddTextBox(1, posY);
+                    dynamicTextBoxes[0].Text = "Alkatresz Neve";
                     break;
                 case "Alkalmazottak":
                     AddTextBox(2, posY);
+                    dynamicTextBoxes[0].Text = "Vezetek Nev";
+                    dynamicTextBoxes[1].Text = "Kereszt Nev";
                     break;
                 case "Ugyfelek":
                     AddTextBox(2, posY);
+                    dynamicTextBoxes[0].Text = "Vezetek Nev";
+                    dynamicTextBoxes[1].Text = "Kereszt Nev";
                     break;
                 default:
                     break;
@@ -461,7 +470,33 @@ namespace WindowsFormsApp1
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearTextBoxes();
 
+            string selectedValue = comboBox3.SelectedItem.ToString();
+            int posY = comboBox3.Location.Y;
+
+            ClearTextBoxes();
+
+
+            switch (selectedValue)
+            {
+                case "RendelesTorles":
+                    AddTextBox(1, posY);
+                    dynamicTextBoxes[0].Text = "Rendeles Neve";
+                    break;
+                case "UgyfelTorles":
+                    AddTextBox(2, posY);
+                    dynamicTextBoxes[0].Text = "Vezetek Nev";
+                    dynamicTextBoxes[1].Text = "Kereszt Nev";
+                    break;
+                case "AlkalmazottTorles":
+                    AddTextBox(2, posY);
+                    dynamicTextBoxes[0].Text = "Vezetek Nev";
+                    dynamicTextBoxes[1].Text = "Kereszt Nev";
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)

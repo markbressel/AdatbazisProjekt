@@ -136,8 +136,8 @@
             this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.Items.AddRange(new object[] {
             "RendelesTorles",
-            "AlkalmazottTorles",
-            "UgyfelTorles"});
+            "UgyfelTorles",
+            "AlkalmazottTorles"});
             this.comboBox3.Location = new System.Drawing.Point(112, 96);
             this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox3.Name = "comboBox3";
