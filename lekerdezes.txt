@@ -8,7 +8,7 @@ END;
 DECLARE
     szam NUMBER;
 BEGIN
-    szam := elsoID;
+    szam := elsoID4;
     DBMS_OUTPUT.PUT_LINE('A legkisebb ID: ' || szam);
 END;
 /
@@ -157,21 +157,105 @@ BEGIN
     END IF;
 END;
 /
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ugyfellekerdezes('Ricciardo','Matteo');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE(szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ujRendeles('Uj rendeles10',3,'Darnics','Norbert','Peth','Emilia','Szelvedo');
+    IF( szam not like -1)THEN
+        DBMS_OUTPUT.PUT_LINE(szam);
+    END IF;
+END;
+/
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := alkalmazottid('Bressel','Robert');
+    
+    IF szam != -1 THEN
+        DBMS_OUTPUT.PUT_LINE('Az alkalmazott ID: ' || szam);
+    END IF;
+END;
+/
+DECLARE
+    szam NUMBER;
+BEGIN
+    szam := ugyfelid('Bressel','Tunde');
+    
+    IF szam != -1 THEN
+        DBMS_OUTPUT.PUT_LINE('Az alkalmazott ID: ' || szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ujAlkalmazott('Handra','Katalin',3500,'0759248657','Karbantarto');
+    IF( szam Not LIKE -1)THEN
+        DBMS_OUTPUT.PUT_LINE(szam);
+    END IF;
+END;
+/
+DECLARE
+    szam VARCHAR2(250);
+BEGIN
+    szam := ujUgyfel('Varga','Istvan','','dananna@gamil.com','romania','Rupea','fout 467');
+    IF( szam Not LIKE -1)THEN
+        DBMS_OUTPUT.PUT_LINE(szam);
+    END IF;
+END;
+/
+DECLARE
+    eredmeny VARCHAR2(100);
+BEGIN
+    eredmeny := rendelesTorlese('Uj rendeles8');
+    DBMS_OUTPUT.PUT_LINE(eredmeny);
+END;
+/
+DECLARE
+    eredmeny VARCHAR2(100);
+BEGIN
+    eredmeny := ugyfelTorlese('Dan', 'Anna');
+    DBMS_OUTPUT.PUT_LINE(eredmeny);
+END;
+/
+DECLARE
+    eredmeny VARCHAR2(100);
+BEGIN
+    eredmeny := torlesAlkalmazott('Nagy', 'Vilmos');
+    DBMS_OUTPUT.PUT_LINE(eredmeny);
+END;
+/
+
 DESCRIBE Alkalmazottak;
 DESCRIBE Alkatreszek;
 DESCRIBE Autok;
+DESCRIBE Ugyfelek;
+DESCRIBE AUTO_tipus;
 SELECT * FROM alkalmazottak;
 DESCRIBE Osztalyok;
-ALTER TABLE alkatreszek
-ADD db INT;
+DESCRIBE Rendelesek;
+SELECT * FROM Rendelesek;
+DESCRIBE Tartalom_Alkatreszek;
+ALTER TABLE Ugyfelek
+ADD penz NUMBER;
 SELECT * FROM alkatreszek;
 SELECT * FROM autok;
 SELECT * FROM auto_tipus order by 3;
 SELECT * FROM Ugyfelek;
 SELECT * FROM rendelesek;
-UPDATE alkatreszek
-SET db = 17
-WHERE alkatresz_id like 10;
+SELECT * FROM osztalyok;
+UPDATE Ugyfelek
+SET penz = 5722
+WHERE UGYFEL_ID like 23;
 SET SERVEROUTPUT ON
 /
 COMMIT;
