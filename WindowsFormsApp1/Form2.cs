@@ -451,7 +451,7 @@ namespace WindowsFormsApp1
             string selectedValue = comboBox2.SelectedItem.ToString();
             int posY = comboBox2.Location.Y;
 
-
+            ClearTextBoxes();
             switch (selectedValue)
             {
                 case "UjRendeles":
