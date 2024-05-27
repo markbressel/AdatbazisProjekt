@@ -502,6 +502,136 @@ namespace WindowsFormsApp1
         private void deleteButton_Click(object sender, EventArgs e)
         {
 
+            string connectionString = "User Id=C##Info6;Password=Sapi12345;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=217.73.170.84)(PORT=44678))(CONNECT_DATA=(SID=oRCL)))";
+
+            if (comboBox3.SelectedItem.ToString() == "RendelesTorles")
+            {
+                string rendelesNev = dynamicTextBoxes[0].Text;
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        string plsql = @"
+                        DECLARE
+                            eredmeny VARCHAR2(100);
+                        BEGIN
+                            eredmeny := rendelesTorlese(:rendelesNev);
+                            :result := eredmeny;
+                        END;";
+
+                        using (OracleCommand command = new OracleCommand(plsql, connection))
+                        {
+                            command.Parameters.Add(new OracleParameter("rendelesNev", OracleDbType.Varchar2)).Value = rendelesNev;
+
+                            var resultParam = new OracleParameter("eredmeny", OracleDbType.Varchar2, 4000)
+                            {
+                                Direction = ParameterDirection.Output
+                            };
+                            command.Parameters.Add(resultParam);
+
+                            command.ExecuteNonQuery();
+
+                            string result = resultParam.Value.ToString();
+                            MessageBox.Show(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
+                }
+            }
+
+            if (comboBox3.SelectedItem.ToString() == "UgyfelTorles")
+            {
+                string VezetekNev = dynamicTextBoxes[0].Text;
+                string KeresztNev = dynamicTextBoxes[1].Text;
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        string plsql = @"
+                        DECLARE
+                            eredmeny VARCHAR2(100);
+                        BEGIN
+                            eredmeny := ugyfelTorlese(:VezetekNev, :KresztNev);
+                            :result := eredmeny;
+                        END;";
+
+                        using (OracleCommand command = new OracleCommand(plsql, connection))
+                        {
+                            command.Parameters.Add(new OracleParameter("VezetekNev", OracleDbType.Varchar2)).Value = VezetekNev;
+                            command.Parameters.Add(new OracleParameter("KeresztNev", OracleDbType.Varchar2)).Value = KeresztNev;
+
+
+                            var resultParam = new OracleParameter("eredmeny", OracleDbType.Varchar2, 4000)
+                            {
+                                Direction = ParameterDirection.Output
+                            };
+                            command.Parameters.Add(resultParam);
+
+                            command.ExecuteNonQuery();
+
+                            string result = resultParam.Value.ToString();
+                            MessageBox.Show(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
+                }
+            }
+
+            if (comboBox3.SelectedItem.ToString() == "AlkalmazottTorles")
+            {
+                string VezetekNev = dynamicTextBoxes[0].Text;
+                string KeresztNev = dynamicTextBoxes[1].Text;
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        string plsql = @"
+                        DECLARE
+                            eredmeny VARCHAR2(100);
+                        BEGIN
+                            eredmeny := torlesAlkalmazott(:VezetekNev, :KresztNev);
+                            :result := eredmeny;
+                        END;";
+
+                        using (OracleCommand command = new OracleCommand(plsql, connection))
+                        {
+                            command.Parameters.Add(new OracleParameter("VezetekNev", OracleDbType.Varchar2)).Value = VezetekNev;
+                            command.Parameters.Add(new OracleParameter("KeresztNev", OracleDbType.Varchar2)).Value = KeresztNev;
+
+
+                            var resultParam = new OracleParameter("eredmeny", OracleDbType.Varchar2, 4000)
+                            {
+                                Direction = ParameterDirection.Output
+                            };
+                            command.Parameters.Add(resultParam);
+
+                            command.ExecuteNonQuery();
+
+                            string result = resultParam.Value.ToString();
+                            MessageBox.Show(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message);
+                    }
+                }
+            }
         }
 
         private void AddTextBox(int count, int posY)
