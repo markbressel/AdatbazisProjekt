@@ -1,4 +1,4 @@
-	--betesz egy alkalmazotat vagy
+--betesz egy alkalmazotat vagy
 CREATE OR REPLACE FUNCTION Regisztracio(nev felhasznalok.felhasznalonev%TYPE, pss felhasznalok.jelszo%TYPE)
 RETURN NUMBER IS db NUMBER;
     max_id NUMBER;
@@ -21,7 +21,7 @@ RETURN NUMBER IS
     CURSOR id_cursor IS SELECT felhasznalo_id FROM felhasznalok ORDER BY felhasznalo_id;
 BEGIN
     v_min_id := NULL;
-    FOR id_rec IN id_cursor+1 LOOP
+    FOR id_rec IN id_cursor LOOP
         IF id_rec.felhasznalo_id IS NULL THEN
             v_min_id := 1;
         ELSIF id_rec.felhasznalo_id > v_min_id + 1 THEN
@@ -110,6 +110,20 @@ BEGIN
         RECORD_ERROR;
 END UzemanyagLekeredezes;
 /
+CREATE OR REPLACE FUNCTION dbLekeredezes(tipus auto_tipus.auto_tipus%TYPE)
+RETURN NUMBER IS darab NUMBER;
+    max_id NUMBER;
+BEGIN
+        SELECT auto_tipus_id INTO max_id FROM auto_tipus WHERE auto_tipus = tipus;
+        SELECT db INTO darab FROM autok WHERE auto_tipus_id = max_id;
+        RETURN darab;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen auto');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END dbLekeredezes;
+/
 CREATE OR REPLACE FUNCTION ArAlkatresz(nev Alkatreszek.alkatresz_nev%TYPE)
 RETURN NUMBER IS db NUMBER;
     max_id NUMBER;
@@ -122,4 +136,523 @@ BEGIN
         WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
         RECORD_ERROR;
 END ArAlkatresz;
+/
+CREATE OR REPLACE FUNCTION DbAlkatresz(nev Alkatreszek.alkatresz_nev%TYPE)
+RETURN NUMBER IS db NUMBER;
+    max_id NUMBER;
+BEGIN
+        SELECT db INTO db FROM Alkatreszek WHERE alkatresz_nev = nev;
+        RETURN db;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen auto');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END DbAlkatresz;
+/
+CREATE OR REPLACE FUNCTION MarkaAlkatresz(tipus auto_tipus.auto_tipus%TYPE)
+RETURN VARCHAR2 IS db VARCHAR2(250);
+BEGIN
+        SELECT alkatresz_marka INTO db FROM Alkatreszek WHERE alkatresz_nev = tipus;
+        RETURN db;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen auto');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END MarkaAlkatresz;
+/
+--az ugyfelek telefonszamat adja vissza a vezeteknev es a keresztnev alapjan, -1 hiba esten
+CREATE OR REPLACE FUNCTION ugyfeltelo(vnev Ugyfelek.ugyfel_vezeteknev%TYPE,knev Ugyfelek.ugyfel_keresztnev%TYPE)
+RETURN VARCHAR2 IS db VARCHAR2(250);
+BEGIN
+        SELECT ugyfel_telefonszam INTO db FROM Ugyfelek WHERE ugyfel_vezeteknev = vnev AND ugyfel_keresztnev = knev;
+        RETURN db;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen ugyfelek');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END ugyfeltelo;
+/
+--az ugyfelek emailcimet adja vissza a vezeteknev es a keresztnev alapjan, -1 hiba esten
+CREATE OR REPLACE FUNCTION ugyfelemail(vnev Ugyfelek.ugyfel_vezeteknev%TYPE,knev Ugyfelek.ugyfel_keresztnev%TYPE)
+RETURN VARCHAR2 IS db VARCHAR2(250);
+BEGIN
+        SELECT ugyfel_email INTO db FROM Ugyfelek WHERE ugyfel_vezeteknev = vnev AND ugyfel_keresztnev = knev;
+        RETURN db;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen ugyfelek');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END ugyfelemail;
+/
+--az ugyfelek orszagat adja vissza a vezeteknev es a keresztnev alapjan, -1 hiba esten
+CREATE OR REPLACE FUNCTION ugyfelorszag(vnev Ugyfelek.ugyfel_vezeteknev%TYPE,knev Ugyfelek.ugyfel_keresztnev%TYPE)
+RETURN VARCHAR2 IS db VARCHAR2(250);
+BEGIN
+        SELECT ugyfel_orszag INTO db FROM Ugyfelek WHERE ugyfel_vezeteknev = vnev AND ugyfel_keresztnev = knev;
+        RETURN db;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen ugyfelek');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END ugyfelorszag;
+/
+--az ugyfelek telepuleset adja vissza a vezeteknev es a keresztnev alapjan, -1 hiba esten
+CREATE OR REPLACE FUNCTION ugyfeltelepules(vnev Ugyfelek.ugyfel_vezeteknev%TYPE,knev Ugyfelek.ugyfel_keresztnev%TYPE)
+RETURN VARCHAR2 IS db VARCHAR2(250);
+BEGIN
+        SELECT ugyfel_telepules INTO db FROM Ugyfelek WHERE ugyfel_vezeteknev = vnev AND ugyfel_keresztnev = knev;
+        RETURN db;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen ugyfelek');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END ugyfeltelepules;
+/
+--az ugyfelek lakcimet adja vissza a vezeteknev es a keresztnev alapjan, -1 hiba esten
+CREATE OR REPLACE FUNCTION ugyfellakcim(vnev Ugyfelek.ugyfel_vezeteknev%TYPE,knev Ugyfelek.ugyfel_keresztnev%TYPE)
+RETURN VARCHAR2 IS db VARCHAR2(250);
+BEGIN
+        SELECT ugyfel_lakcim INTO db FROM Ugyfelek WHERE ugyfel_vezeteknev = vnev AND ugyfel_keresztnev = knev;
+        RETURN db;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen ugyfelek');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END ugyfellakcim;
+/
+--a rendeles neve alapjan kiirja az arat, ki rendelte, kinek es mikor
+CREATE OR REPLACE FUNCTION rendeles(rndl Rendelesek.rendeles_nev%TYPE)
+RETURN VARCHAR2 IS 
+    db INT;
+    ar INT;
+    datum date;
+    alkid VARCHAR2(250);
+    alkalmazott VARCHAR2(250);
+    ugyid VARCHAR2(250);
+    ugyfel VARCHAR2(250);
+    res VARCHAR2(250);
+BEGIN
+        SELECT rendeles_darab INTO db FROM Rendelesek WHERE rndl = rendeles_nev;
+        SELECT rendeles_ar INTO ar FROM Rendelesek WHERE rndl = rendeles_nev;
+        SELECT rendeles_datum INTO datum FROM Rendelesek WHERE rndl = rendeles_nev;
+        SELECT alkalmazott_id INTO alkid FROM Rendelesek WHERE rndl = rendeles_nev;
+        SELECT ugyfel_id INTO ugyid FROM Rendelesek WHERE rndl = rendeles_nev;
+        SELECT alkalmazott_id INTO alkid FROM Rendelesek WHERE rndl = rendeles_nev;
+        SELECT ugyfel_vezeteknev || ugyfel_keresztnev AS Nev INTO ugyfel FROM Ugyfelek WHERE ugyid = ugyfel_id;
+        SELECT alkalmazot_vezeteknev || alkalmazott_keresztnev AS Nev INTO alkalmazott FROM Alkalmazottak WHERE alkid = alkalmazott_id;
+        res := 'A rendelest ' || alkalmazott || ' tette le '||ugyfel||'-nek, '||db||' darabot '||ar|| 'ertekben '||datum||' datumon.';
+        RETURN res;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen ugyfelek');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END rendeles;
+/
+--a rendeles neve alapjan kiirja az arat, ki rendelte, kinek es mikor
+CREATE OR REPLACE FUNCTION alkalmazottlekerdezes(vnev Alkalmazottak.ALKALMAZOT_VEZETEKNEV%TYPE, knev Alkalmazottak.ALKALMAZOTT_KERESZTNEV%TYPE)
+RETURN VARCHAR2 IS 
+    fizetes Alkalmazottak.ALKALMAZOTT_FIZETES%TYPE;
+    teloszam Alkalmazottak.ALKALMAZOTT_TELEFONSZAM%TYPE;
+    oszid Alkalmazottak.OSZTALY_ID%TYPE;
+    onev Osztalyok.OSZTALY_NEV%TYPE;
+    alkalmazott Osztalyok.OSZTALY_EMAIL%TYPE;
+    oleiras Osztalyok.OSZTALY_ROVIDITES%TYPE;
+    res VARCHAR(3000);
+    oemail Osztalyok.OSZTALY_EMAIL%TYPE;
+BEGIN
+        SELECT ALKALMAZOTT_FIZETES INTO fizetes FROM Alkalmazottak WHERE vnev = ALKALMAZOT_VEZETEKNEV AND knev = ALKALMAZOTT_KERESZTNEV;
+        SELECT ALKALMAZOTT_TELEFONSZAM INTO teloszam FROM Alkalmazottak WHERE vnev = ALKALMAZOT_VEZETEKNEV AND knev = ALKALMAZOTT_KERESZTNEV;
+        SELECT OSZTALY_ID INTO oszid FROM Alkalmazottak WHERE vnev = ALKALMAZOT_VEZETEKNEV AND knev = ALKALMAZOTT_KERESZTNEV;
+        SELECT OSZTALY_NEV INTO onev FROM Osztalyok WHERE oszid = OSZTALY_ID;
+        SELECT OSZTALY_ROVIDITES INTO oleiras FROM Osztalyok WHERE oszid = OSZTALY_ID;
+        SELECT OSZTALY_EMAIL INTO oemail FROM Osztalyok WHERE oszid = OSZTALY_ID;
+        SELECT alkalmazot_vezeteknev || alkalmazott_keresztnev INTO alkalmazott FROM Alkalmazottak WHERE vnev = ALKALMAZOT_VEZETEKNEV AND knev = ALKALMAZOTT_KERESZTNEV;
+        res := 'Az '||onev|| ' osztalyban dolgozik, fizetese: '||fizetes||', telefonszama: '||teloszam||'. Az osztaly emailje: '||oemail|| ', leirasa: '||oleiras||'.';
+        RETURN res;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen alkalmazott');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END alkalmazottlekerdezes;
+/
+CREATE OR REPLACE FUNCTION ugyfellekerdezes(vnev Ugyfelek.UGYFEL_VEZETEKNEV%TYPE, knev Ugyfelek.UGYFEL_KERESZTNEV%TYPE)
+RETURN VARCHAR2 IS 
+    teloszam Ugyfelek.UGYFEL_TELEFONSZAM%TYPE;
+    orszag Ugyfelek.UGYFEL_ORSZAG%TYPE;
+    telepules Ugyfelek.UGYFEL_TELEPULES%TYPE;
+    lakcim Ugyfelek.UGYFEL_LAKCIM%TYPE;
+    res VARCHAR(3000);
+    email Ugyfelek.UGYFEL_EMAIL%TYPE;
+BEGIN
+        SELECT UGYFEL_TELEFONSZAM INTO teloszam FROM Ugyfelek WHERE vnev = UGYFEL_VEZETEKNEV AND knev = UGYFEL_KERESZTNEV;
+        SELECT UGYFEL_TELEPULES INTO telepules FROM Ugyfelek WHERE vnev = UGYFEL_VEZETEKNEV AND knev = UGYFEL_KERESZTNEV;
+        SELECT UGYFEL_ORSZAG INTO orszag FROM Ugyfelek WHERE vnev = UGYFEL_VEZETEKNEV AND knev = UGYFEL_KERESZTNEV;
+        SELECT UGYFEL_LAKCIM INTO lakcim FROM Ugyfelek WHERE vnev = UGYFEL_VEZETEKNEV AND knev = UGYFEL_KERESZTNEV;
+        SELECT UGYFEL_EMAIL INTO email FROM Ugyfelek WHERE vnev = UGYFEL_VEZETEKNEV AND knev = UGYFEL_KERESZTNEV;
+        res := 'Az telefonszama: '||teloszam|| ', az emailcime: '||email||', lakhely: '||orszag||', '||telepules|| ', '||lakcim||'.';
+        RETURN res;
+        EXCEPTION WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Nincs ilyen alkalmazott');
+        RETURN -1;
+        WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+        RECORD_ERROR;
+END ugyfellekerdezes;
+/
+CREATE OR REPLACE FUNCTION ujRendeles(
+    nev Rendelesek.RENDELES_NEV%TYPE, 
+    darab Alkatreszek.DB%TYPE,
+    avnev Alkalmazottak.ALKALMAZOTT_KERESZTNEV%TYPE, 
+    aknev Alkalmazottak.ALKALMAZOT_VEZETEKNEV%TYPE,
+    uvnev Ugyfelek.UGYFEL_KERESZTNEV%TYPE, 
+    uknev Ugyfelek.UGYFEL_VEZETEKNEV%TYPE, 
+    termek Rendelesek.RENDELES_NEV%TYPE
+) RETURN VARCHAR2 IS 
+    alkid Alkalmazottak.ALKALMAZOTT_ID%TYPE;
+    ugyid Ugyfelek.UGYFEL_ID%TYPE;
+    ar NUMBER;
+    resar NUMBER;
+    t NUMBER;
+    pn NUMBER;
+    szam NUMBER;
+    rendid NUMBER;
+    elsoid Ugyfelek.UGYFEL_ID%TYPE;
+    res Alkalmazottak.ALKALMAZOTT_KERESZTNEV%TYPE;
+BEGIN
+    SAVEPOINT kezdet;
+    BEGIN
+        SELECT RENDELES_AR INTO elsoid FROM Rendelesek WHERE RENDELES_NEV = nev;
+        RETURN 'A rendeles ara: ' || elsoid;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            NULL;
+        WHEN OTHERS THEN
+            RETURN 'Hiba történt a rendelés ID lekérdezése közben.';
+    END;
+
+    BEGIN
+        IF (nev IS NOT NULL AND darab IS NOT NULL AND avnev IS NOT NULL AND aknev IS NOT NULL AND uvnev IS NOT NULL AND uknev IS NOT NULL AND termek IS NOT NULL) THEN
+            SELECT ALKATRESZ_AR INTO ar FROM Alkatreszek WHERE ALKATRESZ_NEV = termek;
+            SELECT ALKATRESZ_ID INTO t FROM Alkatreszek WHERE termek = ALKATRESZ_NEV;
+            alkid := alkalmazottid(avnev, aknev);
+            ugyid := ugyfelid(uvnev, uknev);
+            SELECT DB INTO szam FROM Alkatreszek WHERE termek = ALKATRESZ_NEV;
+            SELECT PENZ INTO pn FROM Ugyfelek WHERE ugyid = UGYFEL_ID;
+            IF szam < darab THEN 
+                RETURN 'Nincs eleg: ' || termek || ' a raktarban';
+            ELSE
+                resar := darab * ar;
+                IF pn < resar THEN
+                    RETURN 'Nincs eleg osszeg a szamlan ';
+                END IF;
+                elsoid := elsoID2;
+                INSERT INTO Rendelesek (RENDELES_ID,RENDELES_NEV, RENDELES_DARAB, RENDELES_AR, RENDELES_DATUM, ALKALMAZOTT_ID, UGYFEL_ID, TERMEK)
+                VALUES (elsoid,nev, darab, resar, SYSDATE, alkid, ugyid, termek);
+                COMMIT;
+                RETURN 'Sikeres rendelés: ' || nev||' Az ara: ' || resar;
+            END IF;
+        ELSE
+            RETURN 'Hiányzó adatok, nem sikerült a rendelés.';
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK TO kezdet;
+            RETURN 'Hiba történt a rendelés beszúrása közben.';
+    END;
+END ujRendeles;
+/
+SELECT * FROM alkatreszek;
+/
+CREATE OR REPLACE FUNCTION alkalmazottid(vnev Alkalmazottak.ALKALMAZOT_VEZETEKNEV%TYPE,knev Alkalmazottak.ALKALMAZOTT_KERESZTNEV%TYPE)
+RETURN NUMBER IS 
+    alkid Alkalmazottak.ALKALMAZOTT_ID%TYPE;
+BEGIN
+    SELECT ALKALMAZOTT_ID INTO alkid FROM Alkalmazottak WHERE ALKALMAZOT_VEZETEKNEV LIKE vnev AND ALKALMAZOTT_KERESZTNEV LIKE knev;
+    
+    --DBMS_OUTPUT.PUT_LINE('Az alkalmazott ID: ' || alkid);
+    
+    RETURN alkid;
+
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+            DBMS_OUTPUT.PUT_LINE('Helytelen adat');
+            RETURN -1;
+        
+        WHEN OTHERS THEN 
+            DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+            RETURN -1;
+END alkalmazottid;
+/
+CREATE OR REPLACE FUNCTION ugyfelid(vnev Alkalmazottak.ALKALMAZOT_VEZETEKNEV%TYPE,knev Alkalmazottak.ALKALMAZOTT_KERESZTNEV%TYPE)
+RETURN NUMBER IS 
+    alkid Alkalmazottak.ALKALMAZOTT_ID%TYPE;
+BEGIN
+    SELECT UGYFEL_ID INTO alkid FROM Ugyfelek WHERE UGYFEL_VEZETEKNEV LIKE vnev AND UGYFEL_KERESZTNEV LIKE knev;
+    --DBMS_OUTPUT.PUT_LINE('Az alkalmazott ID: ' || alkid);
+    RETURN alkid;
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+            DBMS_OUTPUT.PUT_LINE('Helytelen adat');
+            RETURN -1;
+        
+        WHEN OTHERS THEN 
+            DBMS_OUTPUT.PUT_LINE('Valami hiba!');
+            RETURN -1;
+END ugyfelid;
+/
+CREATE OR REPLACE FUNCTION elsoID2
+RETURN NUMBER IS
+    v_min_id NUMBER;
+    CURSOR id_cursor IS SELECT RENDELES_ID FROM Rendelesek ORDER BY RENDELES_ID;
+BEGIN
+    v_min_id := NULL;
+    FOR id_rec IN id_cursor LOOP
+        IF id_rec.RENDELES_ID IS NULL THEN
+            v_min_id := 1;
+        ELSIF id_rec.RENDELES_ID > v_min_id + 1 THEN
+            v_min_id := v_min_id + 1;
+            RETURN v_min_id;
+        ELSE
+            v_min_id := id_rec.RENDELES_ID;
+        END IF;
+    END LOOP;
+    RETURN v_min_id + 1;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 1;
+END elsoID2;
+/
+CREATE OR REPLACE FUNCTION ujAlkalmazott(
+    vnev Alkalmazottak.ALKALMAZOT_VEZETEKNEV%TYPE, 
+    knev Alkalmazottak.ALKALMAZOTT_KERESZTNEV%TYPE,
+    fizetes Alkalmazottak.ALKALMAZOTT_FIZETES%TYPE, 
+    telefonszam Alkalmazottak.ALKALMAZOTT_TELEFONSZAM%TYPE, 
+    osztaly Osztalyok.OSZTALY_NEV%TYPE
+) RETURN VARCHAR2 IS
+    osztalyid Osztalyok.OSZTALY_ID%TYPE;
+    alkid Alkalmazottak.ALKALMAZOTT_ID%TYPE;
+    elsoid NUMBER;
+BEGIN
+    SAVEPOINT kezdet;
+    BEGIN
+        SELECT OSZTALY_ID INTO osztalyid FROM Osztalyok WHERE OSZTALY_NEV = osztaly;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN 'Hiba: A megadott osztály nem létezik.';
+        WHEN OTHERS THEN
+            RETURN 'Hiba történt az osztály ID lekérdezése közben.';
+    END;
+    BEGIN
+        SELECT ALKALMAZOTT_ID INTO alkid FROM Alkalmazottak WHERE ALKALMAZOT_VEZETEKNEV = vnev AND ALKALMAZOTT_KERESZTNEV = knev;
+        RETURN 'Az alkalmazott már létezik: ' || vnev || ' ' || knev;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            NULL; -- Ha nincs ilyen alkalmazott, folytatjuk a beszúrással
+        WHEN OTHERS THEN
+            RETURN 'Hiba történt az alkalmazott ID lekérdezése közben.';
+    END;
+
+    -- Alkalmazott beszúrása
+    BEGIN
+        IF (vnev IS NOT NULL AND knev IS NOT NULL AND fizetes IS NOT NULL AND telefonszam IS NOT NULL AND osztalyid IS NOT NULL) THEN
+            -- ElsoID meghívása (feltételezve, hogy elsoID3 egy értéket ad vissza)
+            elsoid := elsoID3;
+
+            INSERT INTO Alkalmazottak (ALKALMAZOTT_ID, ALKALMAZOT_VEZETEKNEV, ALKALMAZOTT_KERESZTNEV, ALKALMAZOTT_FIZETES, ALKALMAZOTT_TELEFONSZAM, OSZTALY_ID)
+            VALUES (elsoid, vnev, knev, fizetes, telefonszam, osztalyid);
+
+            COMMIT;
+            RETURN 'Sikeres beszúrás: ' || vnev || ' ' || knev;
+        ELSE
+            RETURN 'Hiányzó adatok, nem sikerült a beszúrás.';
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK TO kezdet;
+            RETURN 'Hiba történt az alkalmazott beszúrása közben.';
+    END;
+END ujAlkalmazott;
+/
+CREATE OR REPLACE FUNCTION elsoID3
+RETURN NUMBER IS
+    v_min_id NUMBER;
+    CURSOR id_cursor IS SELECT ALKALMAZOTT_ID FROM Alkalmazottak ORDER BY ALKALMAZOTT_ID;
+BEGIN
+    v_min_id := NULL;
+    FOR id_rec IN id_cursor LOOP
+        IF id_rec.ALKALMAZOTT_ID IS NULL THEN
+            v_min_id := 1;
+        ELSIF id_rec.ALKALMAZOTT_ID > v_min_id + 1 THEN
+            v_min_id := v_min_id + 1;
+            RETURN v_min_id;
+        ELSE
+            v_min_id := id_rec.ALKALMAZOTT_ID;
+        END IF;
+    END LOOP;
+    RETURN v_min_id + 1;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 1;
+END elsoID3;
+/
+CREATE OR REPLACE FUNCTION ujUgyfel(
+    vnev Ugyfelek.UGYFEL_VEZETEKNEV%TYPE, 
+    knev Ugyfelek.UGYFEL_KERESZTNEV%TYPE,
+    teloszam Ugyfelek.UGYFEL_TELEFONSZAM%TYPE, 
+    email Ugyfelek.UGYFEL_EMAIL%TYPE,
+    orszag Ugyfelek.UGYFEL_ORSZAG%TYPE, 
+    telepules Ugyfelek.UGYFEL_TELEPULES%TYPE,
+    lakcim Ugyfelek.UGYFEL_LAKCIM%TYPE
+) RETURN VARCHAR2 IS
+    ugyid Ugyfelek.UGYFEL_ID%TYPE;
+    elsoid NUMBER;
+BEGIN
+    SAVEPOINT kezdet;
+    BEGIN
+        SELECT UGYFEL_ID INTO ugyid FROM Ugyfelek WHERE UGYFEL_VEZETEKNEV = vnev AND UGYFEL_KERESZTNEV = knev;
+        RETURN 'Ügyfél már létezik: ' || vnev || ' ' || knev;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            NULL;
+        WHEN OTHERS THEN
+            RETURN 'Hiba történt az ügyfél ID lekérdezése közben.';
+    END;
+    BEGIN
+        IF (vnev IS NOT NULL AND knev IS NOT NULL AND teloszam IS NOT NULL AND email IS NOT NULL AND orszag IS NOT NULL AND telepules IS NOT NULL AND lakcim IS NOT NULL) THEN
+            elsoid := elsoID4;
+
+            INSERT INTO Ugyfelek (UGYFEL_ID, UGYFEL_VEZETEKNEV, UGYFEL_KERESZTNEV, UGYFEL_TELEFONSZAM, UGYFEL_EMAIL, UGYFEL_ORSZAG, UGYFEL_TELEPULES, UGYFEL_LAKCIM)
+            VALUES (elsoid, vnev, knev, teloszam, email, orszag, telepules, lakcim);
+
+            COMMIT;
+            RETURN 'Sikeres beszúrás: ' || vnev || ' ' || knev;
+        ELSE
+            RETURN 'Hiányzó adatok, nem sikerült a beszúrás.';
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK TO kezdet;
+            RETURN 'Hiba történt az ügyfél beszúrása közben.';
+    END;
+END ujUgyfel;
+/
+CREATE OR REPLACE FUNCTION elsoID4
+RETURN NUMBER IS
+    v_min_id NUMBER;
+    CURSOR id_cursor IS SELECT UGYFEL_ID FROM Ugyfelek ORDER BY UGYFEL_ID;
+BEGIN
+    v_min_id := NULL;
+    FOR id_rec IN id_cursor LOOP
+        IF id_rec.UGYFEL_ID IS NULL THEN
+            v_min_id := 1;
+        ELSIF id_rec.UGYFEL_ID > v_min_id + 1 THEN
+            v_min_id := v_min_id + 1;
+            RETURN v_min_id;
+        ELSE
+            v_min_id := id_rec.UGYFEL_ID;
+        END IF;
+    END LOOP;
+    RETURN v_min_id + 1;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RETURN 1;
+END elsoID4;
+/
+CREATE OR REPLACE FUNCTION rendelesTorlese(nev Rendelesek.RENDELES_NEV%TYPE)
+RETURN VARCHAR2 IS
+BEGIN
+    DELETE FROM Rendelesek WHERE RENDELES_NEV = nev;
+    IF SQL%ROWCOUNT = 0 THEN
+        RETURN 'Nincs ilyen rendeles: ' || nev;
+    ELSE
+        RETURN 'Rendeles sikeresen torolve: ' || nev;
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        RETURN 'Hiba történt a rendelés törlése közben';
+END rendelesTorlese;
+/
+CREATE OR REPLACE TRIGGER rendeles_torlese_trigger
+AFTER DELETE ON Rendelesek
+FOR EACH ROW
+BEGIN
+    UPDATE Alkatreszek
+    SET DB = DB + :OLD.RENDELES_DARAB
+    WHERE ALKATRESZ_NEV = :OLD.TERMEK;
+    DBMS_OUTPUT.PUT_LINE('Rendeles torolve, a termek darabszama visszaallitva: ' || :OLD.TERMEK);
+END;
+/
+CREATE OR REPLACE FUNCTION ugyfelTorlese(vnev Ugyfelek.UGYFEL_VEZETEKNEV%TYPE, knev Ugyfelek.UGYFEL_KERESZTNEV%TYPE)
+RETURN VARCHAR2 IS
+    ugyid Ugyfelek.UGYFEL_ID%TYPE;
+BEGIN
+    SAVEPOINT kezdet;
+    BEGIN
+        SELECT UGYFEL_ID INTO ugyid FROM Ugyfelek WHERE UGYFEL_VEZETEKNEV = vnev AND UGYFEL_KERESZTNEV = knev;
+        
+        DELETE FROM Ugyfelek WHERE UGYFEL_ID = ugyid;
+        
+        COMMIT;
+        RETURN 'Sikeres törlés: ' || vnev || ' ' || knev;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN 'Nincs ilyen ügyfél: ' || vnev || ' ' || knev;
+        WHEN OTHERS THEN
+            ROLLBACK TO kezdet;
+            RETURN 'Hiba történt az ügyfél törlése közben.';
+    END;
+END ugyfelTorlese;
+/
+CREATE OR REPLACE TRIGGER ugyfel_torlese_trigger
+AFTER DELETE ON Ugyfelek
+FOR EACH ROW
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Ügyfél törölve: ' || :OLD.UGYFEL_VEZETEKNEV || ' ' || :OLD.UGYFEL_KERESZTNEV);
+END;
+/
+CREATE OR REPLACE FUNCTION torlesAlkalmazott(
+    vnev Alkalmazottak.ALKALMAZOT_VEZETEKNEV%TYPE,
+    knev Alkalmazottak.ALKALMAZOTT_KERESZTNEV%TYPE
+) RETURN VARCHAR2 IS
+    alkid Alkalmazottak.ALKALMAZOTT_ID%TYPE;
+BEGIN
+    SAVEPOINT kezdet;
+    BEGIN
+        SELECT ALKALMAZOTT_ID INTO alkid FROM Alkalmazottak WHERE ALKALMAZOT_VEZETEKNEV = vnev AND ALKALMAZOTT_KERESZTNEV = knev;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN 'Az alkalmazott nem létezik: ' || vnev || ' ' || knev;
+        WHEN OTHERS THEN
+            RETURN 'Hiba történt az alkalmazott ID lekérdezése közben.';
+    END;
+
+    BEGIN
+        DELETE FROM Alkalmazottak WHERE ALKALMAZOTT_ID = alkid;
+        IF SQL%ROWCOUNT = 0 THEN
+            RETURN 'Az alkalmazott törlése sikertelen.';
+        ELSE
+            COMMIT;
+            RETURN 'Sikeres törlés: ' || vnev || ' ' || knev;
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK TO kezdet;
+            RETURN 'Hiba történt az alkalmazott törlése közben.';
+    END;
+END torlesAlkalmazott;
+/
+CREATE OR REPLACE TRIGGER alkalmazott_torlese_trigger
+AFTER DELETE ON Alkalmazottak
+FOR EACH ROW
+BEGIN
+    DELETE FROM Rendelesek WHERE ALKALMAZOTT_ID = :OLD.ALKALMAZOTT_ID;
+END;
 /
